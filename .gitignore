@@ -1,0 +1,25 @@
+# For Python
+__pycache__/
+.ipynb_checkpoints/
+
+# For C++:
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore Dockerfile
+!Dockerfile
+
+# Ignore all object & output files
+*.out
+*.o
+
+# Unignore all dirs
+!*/
+!Makefile
+!Makefile-*
+
+# Ignore folder for Cmake
+build/
