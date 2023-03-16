@@ -7,15 +7,15 @@
 #include <istream>
 #include <vector>
 
-
-namespace Token
+/// @brief Пространство имен для основного класса Токена и сопутствующих функций
+namespace token
 {
 
 /**
  * @brief Перечислитель с типом токена. 
  * 
  */
-enum Type : int8_t
+enum class Type : int8_t
 {   
     /** Число. */
     Number = 0,
@@ -34,7 +34,7 @@ enum Type : int8_t
  * @brief Перечислитель со свойством ассоциативности токена.
  * 
  */
-enum Association : int8_t
+enum class Association : int8_t
 {   
     /** Отсутствие ассоциативности. */
     None = 0,
@@ -63,7 +63,7 @@ struct Token
 };
 
 
-int tokenize(istream& stream, std::vector<Token>);
+int tokenize(istream& stream, std::vector<int> tokens/*, std::vector<token::Token> tokens*/);
 
 }
 

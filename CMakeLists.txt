@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20.0)
 
 project(derivative)
 
@@ -18,4 +18,10 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
 set(CMAKE_CXX_FLAGS_RELEASE_INIT "-Wall")
 
+add_subdirectory(src)
 add_subdirectory(tests)
+
+# TODO: Разобраться в Cnherneht CMake нормально. Выписать себе в конспект.
+# https://medium.com/swlh/c-project-structure-for-cmake-67d60135f6f5
+# https://github.com/Jamagas/CMake/tree/master
+# https://sysdev.me/cmake-and-ctest/

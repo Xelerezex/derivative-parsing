@@ -3,6 +3,8 @@
 
 #include <gtest/gtest.h>
 
+#include "token.h"
+
 using namespace std;
 
 TEST(TestGroupName, Subtest_1) 
