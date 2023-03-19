@@ -38,7 +38,7 @@ enable_testing()
 # Added tests
 add_test(
     NAME              TestToken
-    COMMAND           ${CMAKE_PROJECT_NAME}
+    COMMAND           ${TEST_TARGET_NAME}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
