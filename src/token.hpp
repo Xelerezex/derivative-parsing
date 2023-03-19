@@ -47,6 +47,20 @@ enum class Association : int8_t
 };
 
 /**
+ * @brief Перечислитель с ошибками, встречающимися при работе
+ *        с токенами
+ * 
+ */
+enum class Error : int8_t
+{   
+    /** Отсутсвие ошибки. Корректная отработка */
+    None = 0,
+
+    /** Некая обычная ошибка */
+    DefaultError, 
+};
+
+/**
  * @brief Структура, представлябщая собой один токен.
  * 
  */
@@ -62,6 +76,14 @@ struct Token
     Association association;
 };
 
+/**
+ * @brief Оператор проверки равенства двух токенов
+ * 
+ * @param rhs - Токен справа от ==
+ * @param lhs - Токен слева от ==
+ * @return true - Токены равны
+ * @return false - Токены не равны
+ */
 bool operator==(const Token &rhs, const Token &lhs);
 
 /**
@@ -69,9 +91,9 @@ bool operator==(const Token &rhs, const Token &lhs);
  * 
  * @param stream 
  * @param tokens 
- * @return int 
+ * @return int - код ошибки
  */
-int tokenize(std::istream& stream, std::vector<Token> tokens);
+Error tokenize(std::istream& stream, std::vector<Token>& tokens);
 
 }
 

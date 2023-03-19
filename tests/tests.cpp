@@ -35,6 +35,17 @@ TEST(TestFalseAssociationTokenCmp, TokenTest)
     ASSERT_FALSE(first == second);
 }
 
+TEST(TestTokenParse, TokenTest)
+{
+    std::stringstream input{"1 2 3"};
+    std::vector<token::Token> output;
+    token::Error result{token::Error::None};
+
+    result = token::tokenize(input, output);
+    ASSERT_TRUE(result == token::Error::None);
+    ASSERT_FALSE(result == token::Error::DefaultError);
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

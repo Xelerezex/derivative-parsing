@@ -9,10 +9,10 @@ bool token::operator==(const token::Token &rhs, const token::Token &lhs)
         && static_cast<int8_t>(rhs.association) == static_cast<int8_t>(lhs.association);
 }
 
-int token::tokenize(std::istream &stream, std::vector<token::Token> tokens)
+token::Error token::tokenize(std::istream &stream, std::vector<token::Token>& tokens)
 {
     UNUSED(stream);
     UNUSED(tokens);
     
-    return 0;
+    return Error::None;
 }
