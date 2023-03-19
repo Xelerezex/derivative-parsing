@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.20.0)
 
-project(sources)
+set(
+    SOURCE_TARGET_NAME sources
+)
 
-add_library(sources token.cpp)
+add_library(
+    ${SOURCE_TARGET_NAME} 
+        STATIC 
+        token.cpp)

@@ -3,24 +3,22 @@
 
 #include <gtest/gtest.h>
 
-#include "token.h"
+#include "token.hpp"
 
 using namespace std;
 
-TEST(TestGroupName, Subtest_1) 
-{
-  ASSERT_TRUE(1 == 1);
-}
+TEST(TestComparision, TokenTest) 
+{  
+    using namespace token;
 
-TEST(TestGroupName, Subtest_2)
-{
-  ASSERT_FALSE('b' == 'b');
-  cout << "continue test after failure" << endl;
+    Token first  {Type::Number, 10, Association::Left};
+    Token second {Type::Number, 10, Association::Left};
+    
+    ASSERT_TRUE(first == second);
 }
  
 int main(int argc, char **argv)
 {
-  ::testing::InitGoogleTest(&argc, argv);
-
-  return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

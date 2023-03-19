@@ -62,8 +62,16 @@ struct Token
     Association association;
 };
 
+bool operator==(const Token &rhs, const Token &lhs);
 
-int tokenize(istream& stream, std::vector<int> tokens/*, std::vector<token::Token> tokens*/);
+/**
+ * @brief Функция токенезирует текст из стрима
+ * 
+ * @param stream 
+ * @param tokens 
+ * @return int 
+ */
+int tokenize(std::istream& stream, std::vector<Token> tokens);
 
 }
 
