@@ -1,5 +1,15 @@
-{
-    "files.associations": {
-        "iosfwd": "cpp"
-    }
+{   
+    /*
+    // Need for open lldb from cmake extension
+    "cmake.debugConfig": {
+        "stopAtEntry": false,
+        "MIMode": "lldb",
+        "miDebuggerPath": "/usr/bin/lldb",
+        "logging": {
+            "trace": true,
+            "engineLogging": true,
+            "traceResponse": true
+        }
+    },
+    */
 }
