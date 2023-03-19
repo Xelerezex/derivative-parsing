@@ -21,7 +21,7 @@ enum class Type : int8_t
     Number = 0,
 
     /** Математическая переменная. */
-    Variable = 0,
+    Variable,
 
     /** Левая круглая скобка. */
     LeftParenthesis,
