@@ -7,28 +7,28 @@
 
 using namespace std;
 
-TEST(TestComparison, TokenTest) 
+TEST(TestTokenCmp, TokenTest) 
 {  
     token::Token first  {token::Type::Number, 10, token::Association::Left};
     token::Token second {token::Type::Number, 10, token::Association::Left};
     ASSERT_TRUE(first == second);
 }
 
-TEST(TestFalseTypeComparison, TokenTest) 
+TEST(TestFalseTypeTokenCmp, TokenTest) 
 {  
     token::Token first  {token::Type::Number,   10, token::Association::Left};
     token::Token second {token::Type::Variable, 10, token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
-TEST(TestFalsePrecedenceComparison, TokenTest) 
+TEST(TestFalsePrecedenceTokenCmp, TokenTest) 
 {  
     token::Token first  {token::Type::Number, 10, token::Association::Left};
     token::Token second {token::Type::Number, 8,  token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
-TEST(TestFalseAssociationComparison, TokenTest) 
+TEST(TestFalseAssociationTokenCmp, TokenTest) 
 {  
     token::Token first  {token::Type::Number, 10, token::Association::Left};
     token::Token second {token::Type::Number, 10, token::Association::Right};
