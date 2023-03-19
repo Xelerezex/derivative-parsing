@@ -1,4 +1,7 @@
-{   
+{
+    "files.associations": {
+        "iosfwd": "cpp"
+    }
     /*
     // Need for open lldb from cmake extension
     "cmake.debugConfig": {
