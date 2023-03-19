@@ -7,22 +7,34 @@
 
 using namespace std;
 
-TEST(TestComparision, TokenTest) 
+TEST(TestComparison, TokenTest) 
 {  
-    using namespace token;
-
-    Token first  {Type::Number, 10, Association::Left};
-    Token second {Type::Number, 10, Association::Left};
-    
+    token::Token first  {token::Type::Number, 10, token::Association::Left};
+    token::Token second {token::Type::Number, 10, token::Association::Left};
     ASSERT_TRUE(first == second);
 }
 
-TEST(TestFalseTypeComparision, TokenTest) 
+TEST(TestFalseTypeComparison, TokenTest) 
 {  
     token::Token first  {token::Type::Number,   10, token::Association::Left};
     token::Token second {token::Type::Variable, 10, token::Association::Left};
     ASSERT_FALSE(first == second);
 }
+
+TEST(TestFalsePrecedenceComparison, TokenTest) 
+{  
+    token::Token first  {token::Type::Number, 10, token::Association::Left};
+    token::Token second {token::Type::Number, 8,  token::Association::Left};
+    ASSERT_FALSE(first == second);
+}
+
+TEST(TestFalseAssociationComparison, TokenTest) 
+{  
+    token::Token first  {token::Type::Number, 10, token::Association::Left};
+    token::Token second {token::Type::Number, 10, token::Association::Right};
+    ASSERT_FALSE(first == second);
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
