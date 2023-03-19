@@ -23,3 +23,6 @@ __pycache__/
 
 # Ignore folder for Cmake
 build/
+
+# Ignore Testing log
+Testing/
