@@ -35,8 +35,9 @@
 				"surajbarkale.ninja",
 				"twxs.cmake",
 				"ms-vscode.cpptools",
-                "cschlosser.doxdocgen",
-                "wayou.vscode-todo-highlight"
+				"cschlosser.doxdocgen",
+				"wayou.vscode-todo-highlight",
+				"vadimcn.vscode-lldb"
 			],
             "settings": {
                 "terminal.integrated.profiles.linux": {
