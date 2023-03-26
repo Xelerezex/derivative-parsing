@@ -11,6 +11,9 @@
 namespace token
 {
 
+
+// TODO: Что если встреченное число будет отрицательным. Нужен новый тип
+//       или алгоритм shunting yard справляется с такимим вещами? Проверить. 
 /**
  * @brief Перечислитель с типом токена. 
  * 
@@ -51,19 +54,29 @@ enum class Association : int8_t
  *        с токенами
  * 
  */
-enum class Error : int8_t
+enum class Error : int16_t
 {   
     /** Отсутсвие ошибки. Корректная отработка */
     None = 0,
 
     /** Некая обычная ошибка */
-    DefaultError, 
+    DefaultError = -1,
+
+    /** При парсинге возник неизвестный символ */
+    UnknownToken = -2,
+
+    /** На парсинг была дана пустая строка */
+    EmptyString = -3, 
+
+    /** Ошибка парсинга единицы (unit) слова из стрима */
+    WordParsingError = -4, 
 };
 
 /**
  * @brief Структура, представлябщая собой один токен.
  * 
  */
+// TODO: RENAME THIS IN TYPE OR SMTH AND TOKEN SHOULD BE {VALUE, TYPE}
 struct Token
 {
     /* Тип токена */
