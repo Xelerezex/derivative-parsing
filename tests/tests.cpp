@@ -53,17 +53,21 @@ TEST(TestTokenParse, TokenizerNumbers)
 {   
     using namespace token;
 
+    const int expectedSize = 5;
     std::stringstream input{"123 1 1000 3 17"};
     std::vector<TokenType> output;
     Error result{Error::None};
     
-    Token digit{Type::Number, 0, Association::None};
-    std::vector<Token> expected{digit, digit, digit};
+    std::vector<TokenType> expected;
+    for (int index = 0; index < expectedSize; ++index)
+    {
+        expected.push_back({Type::Number, 0, Association::None});
+    }
 
     result = token::tokenize(input, output);
 
-    ASSERT_EQ(result, token::Error::None) << "Error code = " << static_cast<int>(result);
-    ASSERT_EQ(output.size(), 5);
+    ASSERT_EQ(result, token::Error::None);
+    ASSERT_EQ(output.size(), expectedSize);
     ASSERT_EQ(output, expected);
 }
 
