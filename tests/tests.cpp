@@ -49,13 +49,14 @@ TEST(TestTokenParse, TokenizerEmptyString)
     ASSERT_EQ(result, token::Error::EmptyString);
 }
 
+// TODO:  Сделать проверку именно с токенами {value, tokenType}, а не просто {tokenType}
 TEST(TestTokenParse, TokenizerNumbers)
 {   
     using namespace token;
 
     const int expectedSize = 5;
     std::stringstream input{"123 1 1000 3 17"};
-    std::vector<TokenType> output;
+    std::vector<TokenType> output; // TODO: Move TokenType to Token
     Error result{Error::None};
     
     std::vector<TokenType> expected;
