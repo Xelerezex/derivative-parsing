@@ -74,8 +74,7 @@ enum class Error : int16_t
 /**
  * @brief Структура, представляющая собой тип токена
  */
-// TODO: RENAME THIS IN TYPE OR SMTH AND TOKEN SHOULD BE {VALUE, TYPE}
-struct Token
+struct TokenType
 {
     /* Тип токена */
     Type type;
@@ -95,7 +94,7 @@ struct Token
  * @return true - Токены равны
  * @return false - Токены не равны
  */
-bool operator==(const Token &rhs, const Token &lhs);
+bool operator==(const TokenType &rhs, const TokenType &lhs);
 
 /**
  * @brief Функция парсит текст из стрима, и разбивает весь текст по токенам
@@ -104,7 +103,7 @@ bool operator==(const Token &rhs, const Token &lhs);
  * @param tokens 
  * @return int - код ошибки
  */
-Error tokenize(std::istream& stream, std::vector<Token>& tokens);
+Error tokenize(std::istream& stream, std::vector<TokenType>& tokens);
 
 }
 

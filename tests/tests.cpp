@@ -9,29 +9,29 @@ using namespace std;
 
 TEST(TokenCreationTest, AllComparation) 
 {  
-    token::Token first  {token::Type::Number, 10, token::Association::Left};
-    token::Token second {token::Type::Number, 10, token::Association::Left};
+    token::TokenType first  {token::Type::Number, 10, token::Association::Left};
+    token::TokenType second {token::Type::Number, 10, token::Association::Left};
     ASSERT_TRUE(first == second);
 }
 
 TEST(TokenCreationTest, NotEqualType) 
 {  
-    token::Token first  {token::Type::Number,   10, token::Association::Left};
-    token::Token second {token::Type::Variable, 10, token::Association::Left};
+    token::TokenType first  {token::Type::Number,   10, token::Association::Left};
+    token::TokenType second {token::Type::Variable, 10, token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
 TEST(TokenCreationTest, NotEqualPrecedence) 
 {  
-    token::Token first  {token::Type::Number, 10, token::Association::Left};
-    token::Token second {token::Type::Number, 8,  token::Association::Left};
+    token::TokenType first  {token::Type::Number, 10, token::Association::Left};
+    token::TokenType second {token::Type::Number, 8,  token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
 TEST(TokenCreationTest, NotEqualAssociation) 
 {  
-    token::Token first  {token::Type::Number, 10, token::Association::Left};
-    token::Token second {token::Type::Number, 10, token::Association::Right};
+    token::TokenType first  {token::Type::Number, 10, token::Association::Left};
+    token::TokenType second {token::Type::Number, 10, token::Association::Right};
     ASSERT_FALSE(first == second);
 }
 
@@ -40,7 +40,7 @@ TEST(TestTokenParse, TokenizerEmptyString)
     using namespace token;
 
     std::stringstream input{""};
-    std::vector<Token> output;
+    std::vector<TokenType> output;
     Error result{Error::None};
 
     result = token::tokenize(input, output);
@@ -54,7 +54,7 @@ TEST(TestTokenParse, TokenizerNumbers)
     using namespace token;
 
     std::stringstream input{"123 1 1000 3 17"};
-    std::vector<Token> output;
+    std::vector<TokenType> output;
     Error result{Error::None};
     
     Token digit{Type::Number, 0, Association::None};

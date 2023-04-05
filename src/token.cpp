@@ -8,7 +8,7 @@
 #include <chrono>
 #include <iostream>
 
-bool token::operator==(const token::Token &rhs, const token::Token &lhs)
+bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
 {
     return static_cast<int8_t>(rhs.type) == static_cast<int8_t>(lhs.type)
         && static_cast<unsigned int>(rhs.precedence) == static_cast<unsigned int>(lhs.precedence)
@@ -39,7 +39,7 @@ token::Error parseUnit(std::istream &stream)
     return result;
 }
 
-token::Error token::tokenize(std::istream &stream, std::vector<token::Token>& tokens)
+token::Error token::tokenize(std::istream &stream, std::vector<token::TokenType>& tokens)
 {
     Error result {Error::None};
     // В случае пустой строки, выкидываем ошибку:
