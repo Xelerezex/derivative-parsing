@@ -36,7 +36,7 @@
 				"twxs.cmake",
 				"ms-vscode.cpptools",
 				"cschlosser.doxdocgen",
-				"wayou.vscode-todo-highlight",
+				"gruntfuggly.todo-tree",
 				"vadimcn.vscode-lldb"
 			],
             "settings": {
