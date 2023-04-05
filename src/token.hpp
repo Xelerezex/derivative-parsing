@@ -7,7 +7,9 @@
 #include <istream>
 #include <vector>
 
-/// @brief Пространство имен для основного класса Токена и сопутствующих функций
+/**
+ * @brief Пространство имен для основного класса Токена и сопутствующих функций
+ */
 namespace token
 {
 
@@ -16,7 +18,6 @@ namespace token
 //       или алгоритм shunting yard справляется с такимим вещами? Проверить. 
 /**
  * @brief Перечислитель с типом токена. 
- * 
  */
 enum class Type : int8_t
 {   
@@ -35,7 +36,6 @@ enum class Type : int8_t
 
 /**
  * @brief Перечислитель со свойством ассоциативности токена.
- * 
  */
 enum class Association : int8_t
 {   
@@ -52,7 +52,6 @@ enum class Association : int8_t
 /**
  * @brief Перечислитель с ошибками, встречающимися при работе
  *        с токенами
- * 
  */
 enum class Error : int16_t
 {   
@@ -73,8 +72,7 @@ enum class Error : int16_t
 };
 
 /**
- * @brief Структура, представлябщая собой один токен.
- * 
+ * @brief Структура, представляющая собой тип токена
  */
 // TODO: RENAME THIS IN TYPE OR SMTH AND TOKEN SHOULD BE {VALUE, TYPE}
 struct Token
@@ -100,7 +98,7 @@ struct Token
 bool operator==(const Token &rhs, const Token &lhs);
 
 /**
- * @brief Функция токенезирует текст из стрима
+ * @brief Функция парсит текст из стрима, и разбивает весь текст по токенам
  * 
  * @param stream 
  * @param tokens 

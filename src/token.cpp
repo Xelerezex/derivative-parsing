@@ -1,9 +1,9 @@
 #include "token.hpp"
 
-#define UNUSED(x) (void)x;
 
 // TODO: Удалить это все. Либо внести в cmake.config и обернуть макросом
 //       по типу DEBUG_MODE:
+#define UNUSED(x) (void)x;
 #include <thread>
 #include <chrono>
 #include <iostream>
