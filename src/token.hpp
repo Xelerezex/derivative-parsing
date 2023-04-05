@@ -87,6 +87,19 @@ struct TokenType
 };
 
 /**
+ * @brief Структура, представляющая собой целый токен
+ */
+template<typename Value>
+struct Token
+{
+    /* Значение токена */
+    Value value;
+
+    /* Тип токена */
+    TokenType type;
+};
+
+/**
  * @brief Оператор проверки равенства двух токенов
  * 
  * @param rhs - Токен справа от ==

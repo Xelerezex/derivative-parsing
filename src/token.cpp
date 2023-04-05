@@ -34,7 +34,7 @@ token::Error parseUnit(std::istream &stream)
         return result = token::Error::WordParsingError;
     }
 
-    std::cout << "WORD = " << word << std::endl;
+    std::cout << "WORD = " << std::to_string(word) << std::endl;
 
     return result;
 }
@@ -51,11 +51,20 @@ token::Error token::tokenize(std::istream &stream, std::vector<token::TokenType>
     char character{0};
     while (stream.peek() != std::char_traits<char>::eof())
     {   
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(200ms);
+        // Раскомментить, если бесконечный цикл
+        // using namespace std::chrono_literals;
+        // std::this_thread::sleep_for(200ms);
 
         // Проверяем следующий символ
         character = stream.peek();
+        // Выкидываем пробелы из стрима
+        if(std::isspace(character))
+        {   
+            char space;
+            stream.get(space);
+            continue;
+        } 
+
         if (std::isdigit(character))
         {   
             result = parseUnit<int>(stream);
@@ -65,14 +74,6 @@ token::Error token::tokenize(std::istream &stream, std::vector<token::TokenType>
             }
             tokens.push_back({Type::Number, 0, Association::None});
         }
-        if(std::isspace(character))
-        {
-            result = parseUnit<char>(stream);
-            if (result != Error::None)
-            {
-                return result;
-            }
-        } 
         else 
         {
             result = Error::UnknownToken;
