@@ -5,7 +5,8 @@
             "name": "(lldb) Launch",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/build/main/derivsolver",
+            "program": "${workspaceFolder}/build/tests/tests",
+            // "program": "${workspaceFolder}/build/main/derivsolver",
             // "args": ["-arg1", "-arg2"],
         },
         /*
