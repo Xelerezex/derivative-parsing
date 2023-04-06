@@ -1,0 +1,6 @@
+// Important that in {x}_VERSION_MAJOR, {x} - should be exact project name
+// from CMakeLists.txt project()
+#define cmtut_VERSION_MAJOR @cmtut_VERSION_MAJOR@
+#define cmtut_VERSION_MINOR @cmtut_VERSION_MINOR@
+
+#cmakedefine WHEN_DEBUG_MODE

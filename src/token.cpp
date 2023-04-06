@@ -1,12 +1,13 @@
 #include "token.hpp"
 
+#include <config-file.h>
 
-// TODO: Удалить это все. Либо внести в cmake.config и обернуть макросом
-//       по типу DEBUG_MODE:
+#ifdef WHEN_DEBUG_MODE
 #define UNUSED(x) (void)x;
 #include <thread>
 #include <chrono>
 #include <iostream>
+#endif
 
 bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
 {

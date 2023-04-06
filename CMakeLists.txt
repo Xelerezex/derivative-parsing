@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.20.0)
 
 project(derivative)
 
+# For possibility to use debug macro from config file
+option(WHEN_DEBUG_MODE "A Simple library for adding 2 floats" ON)
+
+# Adding for macro from cmake:
+configure_file(config-file.hpp.in config-file.h @ONLY)
+
 # Set flags for targets
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
