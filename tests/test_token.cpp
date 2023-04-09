@@ -4,43 +4,50 @@
 #include <gtest/gtest.h>
 
 #include "token.hpp"
-
+#include "utils.hpp"
+    
 using namespace std;
 
-TEST(TokenCreationTest, AllComparation) 
+/* -------------------- Тестирование сравнения типов токена -------------------- */
+TEST(TokenTypeCreationTest, AllComparation) 
 {  
     token::TokenType first  {token::Type::Number, 10, token::Association::Left};
     token::TokenType second {token::Type::Number, 10, token::Association::Left};
     ASSERT_TRUE(first == second);
 }
 
-TEST(TokenCreationTest, NotEqualType) 
+TEST(TokenTypeCreationTest, NotEqualType) 
 {  
     token::TokenType first  {token::Type::Number,   10, token::Association::Left};
     token::TokenType second {token::Type::Variable, 10, token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
-TEST(TokenCreationTest, NotEqualPrecedence) 
+TEST(TokenTypeCreationTest, NotEqualPrecedence) 
 {  
     token::TokenType first  {token::Type::Number, 10, token::Association::Left};
     token::TokenType second {token::Type::Number, 8,  token::Association::Left};
     ASSERT_FALSE(first == second);
 }
 
-TEST(TokenCreationTest, NotEqualAssociation) 
+TEST(TokenTypeCreationTest, NotEqualAssociation) 
 {  
     token::TokenType first  {token::Type::Number, 10, token::Association::Left};
     token::TokenType second {token::Type::Number, 10, token::Association::Right};
     ASSERT_FALSE(first == second);
 }
 
+/* ---------------------- Тестирование сравнения Токенов ---------------------- */
+
+
+
+/* ---------------------- Тестирование Токенизации строки --------------------- */
 TEST(TestTokenParse, TokenizerEmptyString)
 {   
     using namespace token;
 
     std::stringstream input{""};
-    std::vector<TokenType> output;
+    std::vector<Token> output;
     Error result{Error::None};
 
     result = token::tokenize(input, output);
@@ -54,15 +61,17 @@ TEST(TestTokenParse, TokenizerNumbers)
 {   
     using namespace token;
 
+    std::string dataForTokenize = {"123 1 1000 3 17"};
+
     const int expectedSize = 5;
-    std::stringstream input{"123 1 1000 3 17"};
-    std::vector<TokenType> output; // TODO: Move TokenType to Token
+    std::stringstream input{dataForTokenize};
+    std::vector<Token> output;
     Error result{Error::None};
     
-    std::vector<TokenType> expected;
-    for (int index = 0; index < expectedSize; ++index)
+    std::vector<Token> expected;
+    for (const auto &item : utils::split(dataForTokenize, ' '))
     {
-        expected.push_back({Type::Number, 0, Association::None});
+        expected.push_back({item, {Type::Number, 0, Association::None}});
     }
 
     result = token::tokenize(input, output);
