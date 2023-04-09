@@ -4,11 +4,11 @@ set(
     SOURCE_TARGET_NAME sources
 )
 
-
 add_library(
     ${SOURCE_TARGET_NAME} 
         STATIC 
-        token.cpp)
+        token.cpp
+        utils.cpp)
 
 # Added possibility to use config-file macro:
 target_include_directories(
