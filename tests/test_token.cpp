@@ -38,8 +38,19 @@ TEST(TokenTypeCreationTest, NotEqualAssociation)
 }
 
 /* ---------------------- Тестирование сравнения Токенов ---------------------- */
+TEST(TokenCreationTest, EqualTokens) 
+{  
+    token::Token first  {"17", {token::Type::Number, 0, token::Association::None}};
+    token::Token second {"17", {token::Type::Number, 0, token::Association::None}};
+    ASSERT_TRUE(first == second);
+}
 
-
+TEST(TokenCreationTest, NotEqualTokens) 
+{  
+    token::Token first  {"17", {token::Type::Number, 0, token::Association::None}};
+    token::Token second {"42", {token::Type::Number, 0, token::Association::None}};
+    ASSERT_FALSE(first == second);
+}
 
 /* ---------------------- Тестирование Токенизации строки --------------------- */
 TEST(TestTokenParse, TokenizerEmptyString)
@@ -81,6 +92,7 @@ TEST(TestTokenParse, TokenizerNumbers)
     ASSERT_EQ(output, expected);
 }
 
+/* --------------------------------- RUN ALL TESTS ------------------------------- */
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <istream>
 #include <vector>
+#include <memory>
 
 /**
  * @brief Пространство имен для основного класса Токена и сопутствующих функций
@@ -87,17 +88,34 @@ struct TokenType
 };
 
 /**
- * @brief Структура, представляющая собой целый токен
+ * @brief Структура, представляющая собой целый токен. 
+ *        Любое значение токена конвертируется в строку.
  */
-template<typename Value>
 struct Token
 {
     /* Значение токена */
-    Value value;
+    std::string value;
 
     /* Тип токена */
     TokenType type;
 };
+
+/**
+ * @brief Тип указателя на токен
+ * 
+ */
+using TokenPtr = std::shared_ptr<Token>;
+
+/**
+ * @brief Оператор проверки равенства двух типов токенов
+ * 
+ * @param rhs - Тип токена справа от ==
+ * @param lhs - Тип токена слева от ==
+ * @return true - Типы токена равны
+ * @return false - Типы токена не равны
+ */
+bool operator==(const TokenType &rhs, const TokenType &lhs);
+
 
 /**
  * @brief Оператор проверки равенства двух токенов
@@ -107,7 +125,7 @@ struct Token
  * @return true - Токены равны
  * @return false - Токены не равны
  */
-bool operator==(const TokenType &rhs, const TokenType &lhs);
+bool operator==(const Token &rhs, const Token &lhs);
 
 /**
  * @brief Функция парсит текст из стрима, и разбивает весь текст по токенам
@@ -116,7 +134,7 @@ bool operator==(const TokenType &rhs, const TokenType &lhs);
  * @param tokens 
  * @return int - код ошибки
  */
-Error tokenize(std::istream& stream, std::vector<TokenType>& tokens);
+Error tokenize(std::istream& stream, std::vector<Token>& tokens);
 
 }
 
