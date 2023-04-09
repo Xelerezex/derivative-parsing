@@ -37,7 +37,8 @@
 				"ms-vscode.cpptools",
 				"cschlosser.doxdocgen",
 				"gruntfuggly.todo-tree",
-				"vadimcn.vscode-lldb"
+				"vadimcn.vscode-lldb",
+                "fleexo.cpp-class-creator"
 			],
             "settings": {
                 "terminal.integrated.profiles.linux": {
