@@ -67,7 +67,6 @@ TEST(TestTokenParse, TokenizerEmptyString)
     ASSERT_EQ(result, token::Error::EmptyString);
 }
 
-// TODO:  Сделать проверку именно с токенами {value, tokenType}, а не просто {tokenType}
 TEST(TestTokenParse, TokenizerNumbers)
 {   
     using namespace token;

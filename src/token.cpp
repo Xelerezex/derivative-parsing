@@ -63,7 +63,7 @@ token::Error token::tokenize(std::istream &stream, std::vector<token::Token> &to
     char character{0};
     while (stream.peek() != std::char_traits<char>::eof())
     {   
-        // Раскомментить, если бесконечный цикл
+        // Раскомментить, при дебаге бесконечного цикла
         // using namespace std::chrono_literals;
         // std::this_thread::sleep_for(200ms);
 
