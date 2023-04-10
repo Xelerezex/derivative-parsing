@@ -4,8 +4,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using namespace std;
-
 /* ------------------ Тестирование сравнения типов токена ------------------- */
 TEST(TokenTypeCreationTest, AllComparation)
 {

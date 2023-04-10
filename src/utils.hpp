@@ -2,7 +2,6 @@
 
 #ifndef UTILS_H
 #	define UTILS_H
-
 #	include <string>
 #	include <vector>
 
@@ -12,23 +11,67 @@
 namespace utils
 {
 
-class Parser
+/**
+ * @brief Класс, отвечающий за парсинг из стрима, небольших юнитов.
+ */
+class UnitParser
 {
 public:
-	explicit Parser(std::istream &streamToParse);
+	explicit UnitParser(std::istream &streamToParse);
 
 	// Деструктор
-	~Parser() = default;
+	~UnitParser() = default;
 
 	// Удаленные конструкторы и операторы
-	Parser() = delete;
-	Parser(const Parser &) = delete;
-	Parser(const Parser &&) = delete;
-	Parser &operator=(const Parser &) = delete;
-	Parser &operator=(const Parser &&) = delete;
+	UnitParser() = delete;
+	UnitParser(const UnitParser &) = delete;
+	UnitParser(const UnitParser &&) = delete;
+	UnitParser &operator=(const UnitParser &) = delete;
+	UnitParser &operator=(const UnitParser &&) = delete;
+
+public:
+	/**
+	 * @brief Коды ошибок, возможных при отработке класса
+	 */
+	enum class Error : int8_t
+	{
+		/** Отсутствие ошибки */
+		None,
+		/** Произошла ошибка при парсинге */
+		ParsingError
+	};
+
+public:
+	/**
+	 * @brief Метод возвращает последнюю произошедшую ошибку
+	 *
+	 * @return Error - None, если ошибки не было, либо код
+	 *         произошедшей ошибки
+	 */
+	[[nodiscard]] Error getLastError() const;
+
+	/**
+	 * @brief Метод парсит из стрима числовое значение
+	 *
+	 * @param outputNumber - спаршенное из стрима число.
+	 * @return Error - успешно ли завершила работу функция.
+	 */
+	[[nodiscard]] Error parseInteger(int &outputNumber);
 
 private:
-	std::istream &m_refStream;
+	/**
+	 * @brief Установить код, последней произошедшей ошибки
+	 *
+	 * @param lastError - код последней ошибки
+	 */
+	void setLastError(Error lastError);
+
+private:
+	/** Стрим, из которого происходит чтение */
+	std::istream &m_stream;
+
+	/** Последняя произошедшая ошибка */
+	Error m_lastError;
 };
 
 /**

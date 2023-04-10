@@ -46,8 +46,72 @@ TEST(BasicSplitTest, DotSeparator)
 	ASSERT_EQ(output, expected);
 }
 
+/* -------------------Тестирование класса UnitParser ------------------------ */
+TEST(BasicUnitParser, ParseInteger)
+{
+	using namespace utils;
+
+	std::stringstream stream{"47 -55 78"};
+	UnitParser::Error error{UnitParser::Error::None};
+
+	UnitParser unit{stream};
+
+	int output{0};
+
+	// Первая итерация
+	error = unit.parseInteger(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 47);
+
+	// Вторая итерация
+	error = unit.parseInteger(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, -55);
+
+	// Третья итерация
+	error = unit.parseInteger(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 78);
+}
+
+TEST(BasicUnitParser, ParseIntegerWithError)
+{
+	using namespace utils;
+
+	{
+		std::stringstream stream{"abc"};
+		UnitParser::Error error{UnitParser::Error::None};
+
+		UnitParser unit{stream};
+
+		int output{0};
+		error = unit.parseInteger(output);
+
+		ASSERT_EQ(error, UnitParser::Error::ParsingError);
+		ASSERT_EQ(unit.getLastError(), UnitParser::Error::ParsingError);
+	}
+	{
+		std::stringstream stream{"-"};
+		UnitParser::Error error{UnitParser::Error::None};
+
+		UnitParser unit{stream};
+
+		int output{0};
+		error = unit.parseInteger(output);
+
+		ASSERT_EQ(error, UnitParser::Error::ParsingError);
+		ASSERT_EQ(unit.getLastError(), UnitParser::Error::ParsingError);
+	}
+}
+
 /* ----------------------------- RUN ALL TESTS ------------------------------ */
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
