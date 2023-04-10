@@ -10,28 +10,5 @@
             // "program": "${workspaceFolder}/build/main/derivsolver",
             // "args": ["-arg1", "-arg2"],
         },
-        /*
-        // Need for open lldb from cmake extension 
-        // Other way to launch lldb
-        {
-            "name": "(lldb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${command:cmake.launchTargetPath}",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${config:cmake.buildDirectory}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for lldb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        }
-        */
     ]
 }

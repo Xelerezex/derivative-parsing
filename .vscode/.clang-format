@@ -1,0 +1,90 @@
+---
+# Global setups:
+# options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+BasedOnStyle: LLVM
+
+# Global indent
+IndentWidth: 4
+# Offset for public/private/protected is zero 7 hasn't got own level:
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+
+# Tabs, not spaces!
+UseTab: Always
+TabWidth: 4
+---
+# Setups for C++ language:
+Language: Cpp
+# Must be 80 characters or less!
+ColumnLimit: 80
+
+# Each parameter on each line in functions
+AlignAfterOpenBracket: Align
+
+# Right align for structures
+AlignArrayOfStructures: Left
+
+# Braces style
+BreakBeforeBraces: Allman
+
+# Rule of operator on new string aligning
+AlignOperands: AlignAfterOperator
+
+# Does (int) x instead of (int)x
+SpaceAfterCStyleCast: true
+
+# ALignment of comments:
+AlignTrailingComments: true
+TrailingCommentsAlignmentKinds: 
+  Kind: Always
+
+# Allows short block on one empty line if {} or expresion without {}
+AllowShortBlocksOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: WithoutElse
+
+# Separates big function parameters to different lines:
+BinPackParameters: false
+
+# Break after attributes:
+BreakAfterAttributes: true
+
+# Break before operators. Ops on new line always if no assignment
+BreakBeforeBinaryOperators: NonAssignment
+
+# template<...> then newline concept
+BreakBeforeConceptDeclarations: Always
+
+# All ternar operator from newline
+BreakBeforeTernaryOperators: true
+
+# Break before comma in init list
+BreakConstructorInitializers: BeforeComma
+
+# Inheritance like init-list
+BreakInheritanceList: BeforeComma
+
+#  #define SHORT_NAME       42
+#  #define LONGER_NAME      0x007f   # does nice spacing for macros
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
+
+# Empty lines in class with public/private/protected
+EmptyLineBeforeAccessModifier: LogicalBlock
+
+# Left align for \ in macro
+AlignEscapedNewlines: Left
+
+# Grouping includes
+IncludeBlocks: Regroup
+
+# Sorting includes
+SortIncludes: CaseInsensitive
+
+# Leveling in Macro:
+IndentPPDirectives: AfterHash
+
+# Use \n instead of \r\n
+UseCRLF: false
+---
