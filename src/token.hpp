@@ -125,15 +125,6 @@ bool operator==(const TokenType &rhs, const TokenType &lhs);
  */
 bool operator==(const Token &rhs, const Token &lhs);
 
-/**
- * @brief Функция парсит текст из стрима, и разбивает весь текст по токенам
- *
- * @param stream
- * @param tokens
- * @return int - код ошибки
- */
-Error tokenize(std::istream &stream, std::vector<Token> &tokens);
-
 } // namespace token
 
 #endif

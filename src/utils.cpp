@@ -2,53 +2,6 @@
 
 #include <istream>
 
-utils::UnitParser::UnitParser(std::istream &streamToParse)
-	: m_stream{streamToParse}
-	, m_lastError{utils::UnitParser::Error::None}
-{
-}
-
-utils::UnitParser::Error utils::UnitParser::getLastError() const
-{
-	return m_lastError;
-}
-
-utils::UnitParser::Error utils::UnitParser::parseInteger(int &outputNumber)
-{
-	int integer{0};
-
-	if (!(m_stream >> integer))
-	{
-		setLastError(Error::ParsingError);
-	}
-
-	// Отдаем спаршеное значение
-	outputNumber = integer;
-
-	return getLastError();
-}
-
-utils::UnitParser::Error
-utils::UnitParser::parseCharacter(char &outputCharacter)
-{
-	char character{0};
-
-	if (!(m_stream >> character))
-	{
-		setLastError(Error::ParsingError);
-	}
-
-	// Отдаем спаршеное значение
-	outputCharacter = character;
-
-	return getLastError();
-}
-
-void utils::UnitParser::setLastError(Error lastError)
-{
-	m_lastError = lastError;
-}
-
 std::vector<std::string> utils::split(const std::string &input, char seperator)
 {
 	if (input.empty())
