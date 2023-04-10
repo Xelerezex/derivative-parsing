@@ -53,10 +53,20 @@ public:
 	/**
 	 * @brief Метод парсит из стрима числовое значение
 	 *
-	 * @param outputNumber - спаршенное из стрима число.
-	 * @return Error - успешно ли завершила работу функция.
+	 * @param outputNumber - спаршенное из стрима число
+	 * @return Error - None, если ошибки не было, либо код
+	 *         произошедшей ошибки
 	 */
 	[[nodiscard]] Error parseInteger(int &outputNumber);
+
+	/**
+	 * @brief Метод парсит из стрима один символ
+	 *
+	 * @param outputCharacter - символ, спаршенный из стрима
+	 * @return Error - None, если ошибки не было, либо код
+	 *         произошедшей ошибки
+	 */
+	[[nodiscard]] Error parseCharacter(char &outputCharacter);
 
 private:
 	/**

@@ -28,6 +28,22 @@ utils::UnitParser::Error utils::UnitParser::parseInteger(int &outputNumber)
 	return getLastError();
 }
 
+utils::UnitParser::Error
+utils::UnitParser::parseCharacter(char &outputCharacter)
+{
+	char character{0};
+
+	if (!(m_stream >> character))
+	{
+		setLastError(Error::ParsingError);
+	}
+
+	// Отдаем спаршеное значение
+	outputCharacter = character;
+
+	return getLastError();
+}
+
 void utils::UnitParser::setLastError(Error lastError)
 {
 	m_lastError = lastError;

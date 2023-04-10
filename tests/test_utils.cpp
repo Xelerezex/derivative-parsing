@@ -110,6 +110,67 @@ TEST(BasicUnitParser, ParseIntegerWithError)
 	}
 }
 
+TEST(BasicUnitParser, ParseCharacter)
+{
+	using namespace utils;
+
+	std::stringstream stream{"A b + ~ -zz"};
+	UnitParser::Error error{UnitParser::Error::None};
+
+	UnitParser unit{stream};
+
+	char output{0};
+
+	// Первая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 'A');
+
+	// Вторая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 'b');
+
+	// Третья итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, '+');
+
+	// Четвертая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, '~');
+
+	// Пятая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, '-');
+
+	// Шестая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 'z');
+
+	// Седьмая итерация
+	error = unit.parseCharacter(output);
+
+	ASSERT_EQ(error, UnitParser::Error::None);
+	ASSERT_EQ(unit.getLastError(), UnitParser::Error::None);
+	ASSERT_EQ(output, 'z');
+}
+
 /* ----------------------------- RUN ALL TESTS ------------------------------ */
 int main(int argc, char** argv)
 {
