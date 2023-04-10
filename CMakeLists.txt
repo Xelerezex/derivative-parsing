@@ -6,7 +6,7 @@ project(derivative)
 option(WHEN_DEBUG_MODE "A Simple library for adding 2 floats" ON)
 
 # Adding for macro from cmake:
-configure_file(config-file.hpp.in config-file.h @ONLY)
+configure_file(config-file.hpp.in config-file.hpp @ONLY)
 
 # Set flags for targets
 set(CMAKE_CXX_STANDARD 20)
