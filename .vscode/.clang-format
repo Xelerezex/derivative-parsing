@@ -52,7 +52,7 @@ AllowShortIfStatementsOnASingleLine: WithoutElse
 BinPackParameters: false
 
 # Break after attributes:
-BreakAfterAttributes: true
+BreakAfterAttributes: Always
 
 # Break before operators. Ops on new line always if no assignment
 BreakBeforeBinaryOperators: NonAssignment
