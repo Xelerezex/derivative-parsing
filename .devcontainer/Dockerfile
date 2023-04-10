@@ -36,6 +36,7 @@ RUN apt-get install ${INST_FLAGS} unzip
 RUN apt-get install ${INST_FLAGS} clang
 RUN apt-get install ${INST_FLAGS} lld
 RUN apt-get install ${INST_FLAGS} lldb
+RUN apt-get install ${INST_FLAGS} clang-format
 RUN apt-get install ${INST_FLAGS} valgrind
 RUN apt-get install ${INST_FLAGS} doxygen
 RUN apt-get install ${INST_FLAGS} ca-certificates
