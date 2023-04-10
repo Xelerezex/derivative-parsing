@@ -18,6 +18,9 @@ Language: Cpp
 # Must be 80 characters or less!
 ColumnLimit: 80
 
+# Tab after newline in big line:
+ContinuationIndentWidth: 4
+
 # Each parameter on each line in functions
 AlignAfterOpenBracket: Align
 
@@ -32,6 +35,9 @@ AlignOperands: AlignAfterOperator
 
 # Does (int) x instead of (int)x
 SpaceAfterCStyleCast: true
+
+# All * and & move to variable
+DerivePointerAlignment: true
 
 # ALignment of comments:
 AlignTrailingComments: true
