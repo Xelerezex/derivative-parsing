@@ -30,6 +30,9 @@ AlignArrayOfStructures: Left
 # Braces style
 BreakBeforeBraces: Allman
 
+# Always brake after template
+AlwaysBreakTemplateDeclarations: Yes
+
 # Rule of operator on new string aligning
 AlignOperands: AlignAfterOperator
 
