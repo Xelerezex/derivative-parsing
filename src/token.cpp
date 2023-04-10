@@ -1,5 +1,7 @@
 #include "token.hpp"
 
+#include "utils.hpp"
+
 #include <config-file.hpp>
 
 #ifdef WHEN_DEBUG_MODE
@@ -61,26 +63,25 @@ token::Error parseUnit(std::istream &stream, std::string &output)
 	return result;
 }
 
-// TODO: Move parser to new class to utils.h
 token::Error token::tokenize(std::istream &stream,
 							 std::vector<token::Token> &tokens)
 {
 	Error result{Error::None};
+
 	// В случае пустой строки, выкидываем ошибку:
 	if (stream.peek() == std::char_traits<char>::eof())
 	{
 		return Error::EmptyString;
 	}
 
-	char character{0};
+	utils::UnitParser unit{stream};
+
+	int character{0};
 	while (stream.peek() != std::char_traits<char>::eof())
 	{
-		// Раскомментить, при дебаге бесконечного цикла
-		// using namespace std::chrono_literals;
-		// std::this_thread::sleep_for(200ms);
-
 		// Проверяем следующий символ
-		character = static_cast<char>(stream.peek());
+		character = stream.peek();
+
 		// Выкидываем пробелы из стрима
 		if (std::isspace(character) != 0)
 		{
@@ -91,40 +92,43 @@ token::Error token::tokenize(std::istream &stream,
 
 		if (std::isdigit(character) != 0) // Если встреченный символ - число
 		{
-			std::string number;
+			int number{0};
 
 			// Парсим числовое значение
-			result = parseUnit<int>(stream, number);
-			if (result != Error::None)
+			if (unit.parseInteger(number) != utils::UnitParser::Error::None)
 			{
-				return result;
+				result = Error::WordParsingError;
+				break;
 			}
 
 			// При успешном парсинге - добавляем его к остальным токенам
 			tokens.push_back({
-				number, {Type::Number, 0, Association::None}
+				std::to_string(number), {Type::Number, 0, Association::None}
 			});
 		}
 		else if (std::isalpha(character) != 0) // Если встреченный символ -
 											   // переменная (буква)
 		{
-			std::string alphabetic;
+			char alphabetic;
 
 			// Парсим буквенное значение
-			result = parseUnit<std::string>(stream, alphabetic);
-			if (result != Error::None)
+			if (unit.parseCharacter(alphabetic)
+				!= utils::UnitParser::Error::None)
 			{
-				return result;
+				result = Error::WordParsingError;
+				break;
 			}
 
 			// При успешном парсинге - добавляем его к остальным токенам
 			tokens.push_back({
-				alphabetic, {Type::Variable, 0, Association::None}
+				std::string{alphabetic},
+				{Type::Variable, 0, Association::None}
 			  });
 		}
 		else
 		{
-			return Error::UnknownToken;
+			result = Error::UnknownToken;
+			break;
 		}
 	}
 
