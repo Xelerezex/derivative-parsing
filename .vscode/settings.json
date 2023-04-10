@@ -63,7 +63,8 @@
     // Added clang-tidy code analysis for project:
     "C_Cpp.codeAnalysis.clangTidy.enabled": false,
     "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
-        "modernize-use-trailing-return-type"
+        "modernize-use-trailing-return-type",
+        "readability-redundant-access-specifiers"
     ],
     "C_Cpp.codeAnalysis.clangTidy.checks.enabled": [
         "bugprone-*",
