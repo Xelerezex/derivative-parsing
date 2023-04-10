@@ -1,24 +1,34 @@
 #include "utils.hpp"
 
+#include <istream>
+
+utils::Parser::Parser(std::istream &streamToParse)
+	: m_refStream{streamToParse}
+{
+}
+
 std::vector<std::string> utils::split(const std::string &input, char seperator)
 {
-    if (input.empty()) { return {}; }
+	if (input.empty())
+	{
+		return {};
+	}
 
-    std::vector<std::string> output;
+	std::vector<std::string> output;
 
-    std::string::size_type prevPos{0};
-    std::string::size_type pos{0};
+	std::string::size_type prevPos{0};
+	std::string::size_type pos{0};
 
-    while((pos = input.find(seperator, pos)) != std::string::npos)
-    {
-        std::string subString(input.substr(prevPos, pos - prevPos));
+	while ((pos = input.find(seperator, pos)) != std::string::npos)
+	{
+		std::string const subString(input.substr(prevPos, pos - prevPos));
 
-        output.push_back(subString);
+		output.push_back(subString);
 
-        prevPos = ++pos;
-    }
+		prevPos = ++pos;
+	}
 
-    output.push_back(input.substr(prevPos, pos - prevPos));
+	output.push_back(input.substr(prevPos, pos - prevPos));
 
-    return output;
+	return output;
 }

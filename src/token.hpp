@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef _TOKEN_HPP_
-#define _TOKEN_HPP_
+#ifndef TOKEN_HPP
+#	define TOKEN_HPP
 
-#include <cstdint>
-#include <istream>
-#include <vector>
-#include <memory>
+#	include <cstdint>
+#	include <istream>
+#	include <memory>
+#	include <vector>
 
 /**
  * @brief Пространство имен для основного класса Токена и сопутствующих функций
@@ -14,40 +14,39 @@
 namespace token
 {
 
-
 // TODO: Что если встреченное число будет отрицательным. Нужен новый тип
-//       или алгоритм shunting yard справляется с такимим вещами? Проверить. 
+//       или алгоритм shunting yard справляется с такимим вещами? Проверить.
 /**
- * @brief Перечислитель с типом токена. 
+ * @brief Перечислитель с типом токена.
  */
 enum class Type : int8_t
-{   
-    /** Число. */
-    Number = 0,
+{
+	/** Число. */
+	Number = 0,
 
-    /** Математическая переменная. */
-    Variable,
+	/** Математическая переменная. */
+	Variable,
 
-    /** Левая круглая скобка. */
-    LeftParenthesis,
+	/** Левая круглая скобка. */
+	LeftParenthesis,
 
-    /** Правая круглая скобка. */
-    RightParenthesis
+	/** Правая круглая скобка. */
+	RightParenthesis
 };
 
 /**
  * @brief Перечислитель со свойством ассоциативности токена.
  */
 enum class Association : int8_t
-{   
-    /** Отсутствие ассоциативности. */
-    None = 0,
+{
+	/** Отсутствие ассоциативности. */
+	None = 0,
 
-    /** Левая ассоциативность. */
-    Left,
+	/** Левая ассоциативность. */
+	Left,
 
-    /** Правая ассоциативности. */
-    Right
+	/** Правая ассоциативности. */
+	Right
 };
 
 /**
@@ -55,21 +54,21 @@ enum class Association : int8_t
  *        с токенами
  */
 enum class Error : int16_t
-{   
-    /** Отсутсвие ошибки. Корректная отработка */
-    None = 0,
+{
+	/** Отсутсвие ошибки. Корректная отработка */
+	None = 0,
 
-    /** Некая обычная ошибка */
-    DefaultError = -1,
+	/** Некая обычная ошибка */
+	DefaultError = -1,
 
-    /** При парсинге возник неизвестный символ */
-    UnknownToken = -2,
+	/** При парсинге возник неизвестный символ */
+	UnknownToken = -2,
 
-    /** На парсинг была дана пустая строка */
-    EmptyString = -3, 
+	/** На парсинг была дана пустая строка */
+	EmptyString = -3,
 
-    /** Ошибка парсинга единицы (unit) слова из стрима */
-    WordParsingError = -4, 
+	/** Ошибка парсинга единицы (unit) слова из стрима */
+	WordParsingError = -4,
 };
 
 /**
@@ -77,38 +76,38 @@ enum class Error : int16_t
  */
 struct TokenType
 {
-    /* Тип токена */
-    Type type;
+	/* Тип токена */
+	Type type;
 
-    /* Старшинство токена */
-    unsigned int precedence;
+	/* Старшинство токена */
+	unsigned int precedence;
 
-    /* Ассоциативность токена */ 
-    Association association;
+	/* Ассоциативность токена */
+	Association association;
 };
 
 /**
- * @brief Структура, представляющая собой целый токен. 
+ * @brief Структура, представляющая собой целый токен.
  *        Любое значение токена конвертируется в строку.
  */
 struct Token
 {
-    /* Значение токена */
-    std::string value;
+	/* Значение токена */
+	std::string value;
 
-    /* Тип токена */
-    TokenType type;
+	/* Тип токена */
+	TokenType type;
 };
 
 /**
  * @brief Тип указателя на токен
- * 
+ *
  */
 using TokenPtr = std::shared_ptr<Token>;
 
 /**
  * @brief Оператор проверки равенства двух типов токенов
- * 
+ *
  * @param rhs - Тип токена справа от ==
  * @param lhs - Тип токена слева от ==
  * @return true - Типы токена равны
@@ -116,10 +115,9 @@ using TokenPtr = std::shared_ptr<Token>;
  */
 bool operator==(const TokenType &rhs, const TokenType &lhs);
 
-
 /**
  * @brief Оператор проверки равенства двух токенов
- * 
+ *
  * @param rhs - Токен справа от ==
  * @param lhs - Токен слева от ==
  * @return true - Токены равны
@@ -129,13 +127,13 @@ bool operator==(const Token &rhs, const Token &lhs);
 
 /**
  * @brief Функция парсит текст из стрима, и разбивает весь текст по токенам
- * 
- * @param stream 
- * @param tokens 
+ *
+ * @param stream
+ * @param tokens
  * @return int - код ошибки
  */
-Error tokenize(std::istream& stream, std::vector<Token>& tokens);
+Error tokenize(std::istream &stream, std::vector<Token> &tokens);
 
-}
+} // namespace token
 
 #endif
