@@ -58,7 +58,8 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "cassert": "cpp"
     },
     // Added clang-tidy code analysis for project:
     "C_Cpp.codeAnalysis.clangTidy.enabled": false,
