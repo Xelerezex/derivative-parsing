@@ -2,6 +2,7 @@
 
 #include "utils.hpp"
 
+#include <cassert>
 #include <config-file.hpp>
 
 #ifdef WHEN_DEBUG_MODE
@@ -10,6 +11,14 @@
 #	include <iostream>
 #	include <thread>
 #endif
+
+/* ------------------------- Относится к TokenType -------------------------- */
+void token::swap(token::TokenType &lhs, token::TokenType &rhs)
+{
+	std::swap(rhs.type, lhs.type);
+	std::swap(rhs.precedence, lhs.precedence);
+	std::swap(rhs.association, lhs.association);
+}
 
 bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
 {

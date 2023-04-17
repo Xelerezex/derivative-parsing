@@ -4,7 +4,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-/* ------------------ Тестирование сравнения типов токена ------------------- */
+/* -------------------- Тестирование структуры TokenType -------------------- */
 TEST(TokenTypeCreationTest, AllComparation)
 {
 	const unsigned int biggestPrecedence{10};
@@ -50,7 +50,20 @@ TEST(TokenTypeCreationTest, NotEqualAssociation)
 	ASSERT_FALSE(first == second);
 }
 
-/* --------------------- Тестирование сравнения Токенов --------------------- */
+TEST(TokenTypeSwappingTest, NotEqualTokens)
+{
+	using namespace token;
+
+	TokenType first{Type::Number, 0, Association::None};
+	TokenType second{Type::Variable, 0, Association::None};
+
+	swap(first, second);
+
+	ASSERT_EQ(first,
+			  (TokenType{token::Type::Variable, 0, token::Association::None}));
+
+	ASSERT_EQ(second, (TokenType{Type::Number, 0, Association::None}));
+}
 TEST(TokenCreationTest, EqualTokens)
 {
 	const token::Token first{

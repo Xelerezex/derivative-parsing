@@ -21,8 +21,11 @@ namespace token
  */
 enum class Type : int8_t
 {
+	/* Отсутствие типа у токена */
+	None = 0,
+
 	/** Число. */
-	Number = 0,
+	Number,
 
 	/** Математическая переменная. */
 	Variable,
@@ -84,10 +87,28 @@ struct TokenType
 
 	/* Ассоциативность токена */
 	Association association;
+
+	/**
+	 * @brief Оператор проверки равенства двух типов токенов
+	 *
+	 * @param rhs - Тип токена справа от ==
+	 * @param lhs - Тип токена слева от ==
+	 * @return true - Типы токена равны
+	 * @return false - Типы токена не равны
+	 */
+	friend bool operator==(const TokenType &rhs, const TokenType &lhs);
+
+	/**
+	 * @brief Функция обменивает местами значения двух TokenType
+	 *
+	 * @param lhs - первый тип токена на обмен
+	 * @param rhs - второй тип токена на обмен
+	 */
+	friend void swap(TokenType &lhs, TokenType &rhs);
 };
 
 /**
- * @brief Структура, представляющая собой целый токен.
+ * @brief Класс, представляющая собой целый токен.
  *        Любое значение токена конвертируется в строку.
  */
 struct Token
