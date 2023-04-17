@@ -20,6 +20,13 @@ namespace utils
  */
 std::vector<std::string> split(const std::string &input, char seperator);
 
+/**
+ * @brief Функция опрделяет, считается ли данная на вход строка числом
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается числом
+ * @return false - не считается числом
+ */
 bool isNumber(const std::string &inputStr);
 
 } // namespace utils
