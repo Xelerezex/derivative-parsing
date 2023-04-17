@@ -29,7 +29,64 @@ bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
 			   == static_cast<int8_t>(lhs.association);
 }
 
+/* --------------------------- Относится к Token ---------------------------- */
 bool token::operator==(const Token &rhs, const Token &lhs)
 {
-	return rhs.value == lhs.value && rhs.type == lhs.type;
+	return rhs.m_value == lhs.m_value && rhs.m_type == lhs.m_type;
+}
+
+void token::swap(Token &lhs, Token &rhs)
+{
+	std::swap(lhs.m_value, rhs.m_value);
+	token::swap(lhs.m_type, rhs.m_type);
+}
+
+token::Token::Token(const std::string &value, const TokenType &type)
+	: m_value{value}
+	, m_type{type}
+{
+}
+
+token::Token &token::Token::operator=(const Token &rhs) noexcept
+{
+	copyAndSwap(rhs);
+	return *this;
+}
+
+token::Token &token::Token::operator=(const Token &&rhs) noexcept
+{
+	copyAndSwap(rhs);
+	return *this;
+}
+
+token::Token::Token(const Token &rhs) noexcept { copyAndSwap(rhs); }
+
+token::Token::Token(const Token &&rhs) noexcept { copyAndSwap(rhs); }
+
+token::Token token::Token::createToken(const std::string &value)
+{
+	assert(!value.empty());
+
+	Token result{
+		"Empty", {Type::None, 0, Association::None}
+	   };
+
+	if (utils::isNumber(value))
+	{
+		result = Token{
+			value, {Type::Number, 0, Association::None}
+		   };
+	}
+
+	return result;
+}
+
+void token::Token::copyAndSwap(const Token &rhs) noexcept
+{
+	std::string tempStr{rhs.m_value};
+	TokenType tempType{rhs.m_type.type, rhs.m_type.precedence,
+					   rhs.m_type.association};
+
+	m_value.swap(tempStr);
+	token::swap(m_type, tempType);
 }

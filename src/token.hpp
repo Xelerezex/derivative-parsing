@@ -111,13 +111,92 @@ struct TokenType
  * @brief Класс, представляющая собой целый токен.
  *        Любое значение токена конвертируется в строку.
  */
-struct Token
+class Token
 {
+public:
+	/**
+	 * @brief Основной конструктор
+	 *
+	 * @param value - значение токена
+	 * @param type  - тип токена
+	 */
+	explicit Token(const std::string &value, const TokenType &type);
+
+	/**
+	 * @brief Оператор присваивания копии.
+	 *
+	 * @param rhs - токен, который копируется
+	 * @return Token& - ссылка на этот объект
+	 */
+	Token &operator=(const Token &rhs) noexcept;
+
+	/**
+	 * @brief Move-оператор присваивания
+	 *
+	 * @param rhs - rvalue токен
+	 * @return Token& - ссылка на этот объект
+	 */
+	Token &operator=(const Token &&rhs) noexcept;
+
+	/**
+	 * @brief Конструктор копирования
+	 *
+	 * @param rhs  - токен, который копируется
+	 */
+	Token(const Token &rhs) noexcept;
+
+	/**
+	 * @brief Констуктор перемещения
+	 *
+	 * @param rhs  - rvalue токен
+	 */
+	Token(const Token &&rhs) noexcept;
+
+	static Token createToken(const std::string &value);
+
+	/**
+	 * @brief Деструктор
+	 */
+	~Token() = default;
+
+	/**
+	 * @brief Удаленный дефолтный конструктор
+	 */
+	Token() = delete;
+
+	/**
+	 * @brief Оператор проверки равенства двух токенов
+	 *
+	 * @param rhs - Токен справа от ==
+	 * @param lhs - Токен слева от ==
+	 * @return true - Токены равны
+	 * @return false - Токены не равны
+	 */
+	friend bool operator==(const Token &rhs, const Token &lhs);
+
+	/**
+	 * @brief Функция обменивает местами значения двух Токенов
+	 *
+	 * @param lhs - первый токен на обмен
+	 * @param rhs - второй токен на обмен
+	 */
+	friend void swap(Token &lhs, Token &rhs);
+
+private:
+	/**
+	 * @brief Функция копирует объект, и потом подменяет его поля с полями этого
+	 *        класса (Copy-n-Swap идиома).
+	 *
+	 * @param rhs - токен, чьи поля передут этому классу.
+	 */
+	void copyAndSwap(const Token &rhs) noexcept;
+
+private:
 	/* Значение токена */
-	std::string value;
+	std::string m_value;
 
 	/* Тип токена */
-	TokenType type;
+	TokenType m_type;
 };
 
 /**
@@ -125,26 +204,6 @@ struct Token
  *
  */
 using TokenPtr = std::shared_ptr<Token>;
-
-/**
- * @brief Оператор проверки равенства двух типов токенов
- *
- * @param rhs - Тип токена справа от ==
- * @param lhs - Тип токена слева от ==
- * @return true - Типы токена равны
- * @return false - Типы токена не равны
- */
-bool operator==(const TokenType &rhs, const TokenType &lhs);
-
-/**
- * @brief Оператор проверки равенства двух токенов
- *
- * @param rhs - Токен справа от ==
- * @param lhs - Токен слева от ==
- * @return true - Токены равны
- * @return false - Токены не равны
- */
-bool operator==(const Token &rhs, const Token &lhs);
 
 } // namespace token
 
