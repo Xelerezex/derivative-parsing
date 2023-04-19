@@ -2,7 +2,6 @@
 
 #include "utils.hpp"
 
-#include <cassert>
 #include <config-file.hpp>
 
 #ifdef WHEN_DEBUG_MODE

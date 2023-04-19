@@ -4,6 +4,16 @@
 	#define UTILS_H
 	#include <string>
 	#include <vector>
+	#include <cassert>
+
+	/*!
+	 * @brief Макрос позволяет вызывать assert с сообщением
+	 *
+	 * @param exp - проверяемое выражение
+	 * 				(true или false на вход. Срабатывает если передан false)
+	 * @param msg - сообщение при ошибке
+	 */
+	#define assertm(exp, msg) assert(((void)msg, exp))
 
 /**
  * @brief Пространство имен с функциями общего назначения
