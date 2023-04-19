@@ -78,16 +78,11 @@ token::Token token::Token::createToken(const std::string &value)
 		throw std::logic_error("Empty token string");
 	}
 
-	Token result{"Empty", {Type::None, 0, Association::None}};
+	Token result{value, {Type::None, 0, Association::None}};
 
 	if (utils::isNumber(value))
 	{
 		result = Token{value, {Type::Number, 0, Association::None}};
-	}
-	else
-	{
-		// Неизвестный токен
-		result = Token{value, {Type::None, 0, Association::None}};
 	}
 
 	return result;
