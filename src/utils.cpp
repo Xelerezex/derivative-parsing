@@ -74,3 +74,23 @@ bool utils::isVariable(const std::string &inputStr)
 
 	return std::isalpha(inputStr.front());
 }
+
+bool utils::isLeftParenthesis(const std::string &inputStr)
+{
+	if (inputStr.empty() || inputStr.length() > 1)
+	{
+		return false;
+	}
+
+	return *inputStr.c_str() == '(';
+}
+
+bool utils::isRightParenthesis(const std::string &inputStr)
+{
+	if (inputStr.empty() || inputStr.length() > 1)
+	{
+		return false;
+	}
+
+	return *inputStr.c_str() == ')';
+}

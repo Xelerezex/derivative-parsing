@@ -281,6 +281,94 @@ TEST(BasicIsVariableTest, CharacterIsNotVariable)
 	ASSERT_EQ(output, false);
 }
 
+/* --------------- Тестирование функции isLeftParenthesis ------------------- */
+TEST(BasicIsLeftParenthesisTest, EmptyString)
+{
+	const std::string input{""};
+
+	const bool output = utils::isLeftParenthesis(input);
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsLeftParenthesisTest, TooMuchSymbols)
+{
+	bool output = utils::isLeftParenthesis("()");
+	ASSERT_EQ(output, false);
+
+	output = utils::isLeftParenthesis("(+");
+	ASSERT_EQ(output, false);
+
+	output = utils::isLeftParenthesis("(a");
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsLeftParenthesisTest, CharacterIsLeftParenthesis)
+{
+	const std::string input{"("};
+
+	bool output = utils::isLeftParenthesis(input);
+	ASSERT_EQ(output, true);
+}
+
+TEST(BasicIsLeftParenthesisTest, CharacterIsNoLeftParenthesis)
+{
+	bool output = utils::isLeftParenthesis(")");
+	ASSERT_EQ(output, false);
+
+	output = utils::isLeftParenthesis("@");
+	ASSERT_EQ(output, false);
+
+	output = utils::isLeftParenthesis("+");
+	ASSERT_EQ(output, false);
+
+	output = utils::isLeftParenthesis("7");
+	ASSERT_EQ(output, false);
+}
+
+/* --------------- Тестирование функции isRightParenthesis ------------------ */
+TEST(BasicIsRightParenthesisTest, EmptyString)
+{
+	const std::string input{""};
+
+	const bool output = utils::isRightParenthesis(input);
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsRightParenthesisTest, TooMuchSymbols)
+{
+	bool output = utils::isRightParenthesis("()");
+	ASSERT_EQ(output, false);
+
+	output = utils::isRightParenthesis("+)");
+	ASSERT_EQ(output, false);
+
+	output = utils::isRightParenthesis("X)");
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsRightParenthesisTest, CharacterIsRightParenthesis)
+{
+	const std::string input{")"};
+
+	bool output = utils::isRightParenthesis(input);
+	ASSERT_EQ(output, true);
+}
+
+TEST(BasicIsRightParenthesisTest, CharacterIsNotRightParenthesis)
+{
+	bool output = utils::isRightParenthesis("(");
+	ASSERT_EQ(output, false);
+
+	output = utils::isRightParenthesis("@");
+	ASSERT_EQ(output, false);
+
+	output = utils::isRightParenthesis("+");
+	ASSERT_EQ(output, false);
+
+	output = utils::isRightParenthesis("7");
+	ASSERT_EQ(output, false);
+}
+
 /* ----------------------------- RUN ALL TESTS ------------------------------ */
 int main (int argc, char** argv)
 {

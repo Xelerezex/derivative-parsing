@@ -24,7 +24,7 @@ namespace utils
 /**
  * @brief Функция разделяет строку даваемую на вход, по какомуто разделителю
  *
- * @param input - входная строка
+ * @param input - строка на вход
  * @param seperator - разделитель
  * @return стандартный вектор с разделенной строкой
  */
@@ -48,6 +48,26 @@ bool isNumber(const std::string &inputStr);
  * @return false - не считается переменной
  */
 bool isVariable(const std::string &inputStr);
+
+/**
+ * @brief Функция опрделяет, считается ли данная на вход строка левой круглой
+ * 		  скобкой.
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается левой круглой скобкой
+ * @return false - не считается левой круглой скобкой
+ */
+bool isLeftParenthesis(const std::string &inputStr);
+
+/**
+ * @brief Функция опрделяет, считается ли данная на вход строка правой круглой
+ * 		  скобкой.
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается правой круглой скобкой
+ * @return false - не считается правой круглой скобкой
+ */
+bool isRightParenthesis(const std::string &inputStr);
 
 } // namespace utils
 
