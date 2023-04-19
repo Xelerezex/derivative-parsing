@@ -6,10 +6,10 @@
 #include <config-file.hpp>
 
 #ifdef WHEN_DEBUG_MODE
-#	define DEBUG_UNUSED(x) (void) (x);
-#	include <chrono>
-#	include <iostream>
-#	include <thread>
+	#define DEBUG_UNUSED(x) (void)(x);
+	#include <chrono>
+	#include <iostream>
+	#include <thread>
 #endif
 
 /* ------------------------- Относится к TokenType -------------------------- */
@@ -23,10 +23,10 @@ void token::swap(token::TokenType &lhs, token::TokenType &rhs)
 bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
 {
 	return static_cast<int8_t>(rhs.type) == static_cast<int8_t>(lhs.type)
-		&& static_cast<unsigned int>(rhs.precedence)
-			   == static_cast<unsigned int>(lhs.precedence)
-		&& static_cast<int8_t>(rhs.association)
-			   == static_cast<int8_t>(lhs.association);
+		   && static_cast<unsigned int>(rhs.precedence)
+				  == static_cast<unsigned int>(lhs.precedence)
+		   && static_cast<int8_t>(rhs.association)
+				  == static_cast<int8_t>(lhs.association);
 }
 
 /* --------------------------- Относится к Token ---------------------------- */
@@ -59,9 +59,15 @@ token::Token &token::Token::operator=(const Token &&rhs) noexcept
 	return *this;
 }
 
-token::Token::Token(const Token &rhs) noexcept { copyAndSwap(rhs); }
+token::Token::Token(const Token &rhs) noexcept
+{
+	copyAndSwap(rhs);
+}
 
-token::Token::Token(const Token &&rhs) noexcept { copyAndSwap(rhs); }
+token::Token::Token(const Token &&rhs) noexcept
+{
+	copyAndSwap(rhs);
+}
 
 // TODO [0]: Доделать полостью createToken и протестировать
 // TODO [1]: Написать соответствующие функции в utils для определения токена и
@@ -70,15 +76,11 @@ token::Token token::Token::createToken(const std::string &value)
 {
 	assert(!value.empty());
 
-	Token result{
-		"Empty", {Type::None, 0, Association::None}
-	   };
+	Token result{"Empty", {Type::None, 0, Association::None}};
 
 	if (utils::isNumber(value))
 	{
-		result = Token{
-			value, {Type::Number, 0, Association::None}
-		   };
+		result = Token{value, {Type::Number, 0, Association::None}};
 	}
 
 	return result;

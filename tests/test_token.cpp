@@ -69,39 +69,31 @@ TEST(TokenTypeSwappingTest, NotEqualTokens)
 TEST(TokenCreationTest, EqualTokens)
 {
 	const token::Token first{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	const token::Token second{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	ASSERT_TRUE(first == second);
 }
 
 TEST(TokenCreationTest, NotEqualTokens)
 {
 	const token::Token first{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	const token::Token second{
-		"42", {token::Type::Number, 0, token::Association::None}
-	};
+		"42", {token::Type::Number, 0, token::Association::None}};
 	ASSERT_FALSE(first == second);
 }
 
 TEST(TokenCopyTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
-	Token none{
-		"0", {Type::None, 0, Association::None}
-	   };
+	Token none{"0", {Type::None, 0, Association::None}};
 
 	Token general{none};
 
 	ASSERT_EQ(general, none);
 
-	Token variable{
-		"A", {Type::Variable, 2, Association::Right}
-	};
+	Token variable{"A", {Type::Variable, 2, Association::Right}};
 
 	general = variable;
 
@@ -113,21 +105,13 @@ TEST(TokenSwapTest, NoEqualTokens)
 {
 	using namespace token;
 
-	Token first{
-		"11", {Type::Number, 0, Association::None}
-	  };
-	Token second{
-		"A", {Type::Variable, 2, Association::Right}
-	};
+	Token first{"11", {Type::Number, 0, Association::None}};
+	Token second{"A", {Type::Variable, 2, Association::Right}};
 
 	swap(first, second);
 
-	Token firstWas{
-		"11", {Type::Number, 0, Association::None}
-	  };
-	Token secondWas{
-		"A", {Type::Variable, 2, Association::Right}
-	};
+	Token firstWas{"11", {Type::Number, 0, Association::None}};
+	Token secondWas{"A", {Type::Variable, 2, Association::Right}};
 
 	ASSERT_EQ(first, secondWas);
 	ASSERT_NE(first, firstWas);
@@ -140,29 +124,29 @@ TEST(TokenMoveTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
 
-	Token none{
-		"0", {Type::None, 0, Association::None}
-	   };
+	Token none{"0", {Type::None, 0, Association::None}};
 
 	Token general = std::move(none);
 
-	ASSERT_EQ(general, (Token{
-						   "0", {Type::None, 0, Association::None}
-	  }));
+	ASSERT_EQ(general, (Token{"0", {Type::None, 0, Association::None}}));
 
-	Token variable{
-		"A", {Type::Variable, 2, Association::Right}
-	};
+	Token variable{"A", {Type::Variable, 2, Association::Right}};
 
 	general = std::move(variable);
 
-	ASSERT_EQ(general, (Token{
-						   "A", {Type::Variable, 2, Association::Right}
-	   }));
+	ASSERT_EQ(general, (Token{"A", {Type::Variable, 2, Association::Right}}));
+}
+
+TEST(TokenCreationTest, CreateNumber)
+{
+	using namespace token;
+
+	Token numOne = Token::createToken("10");
+	ASSERT_EQ(numOne, (Token{"10", {Type::Number, 0, Association::None}}));
 }
 
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
-int main(int argc, char **argv)
+int main (int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

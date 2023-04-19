@@ -1,9 +1,9 @@
 #pragma once
 
 #ifndef UTILS_H
-#	define UTILS_H
-#	include <string>
-#	include <vector>
+	#define UTILS_H
+	#include <string>
+	#include <vector>
 
 /**
  * @brief Пространство имен с функциями общего назначения

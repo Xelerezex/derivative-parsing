@@ -1,12 +1,12 @@
 #pragma once
 
 #ifndef TOKEN_HPP
-#	define TOKEN_HPP
+	#define TOKEN_HPP
 
-#	include <cstdint>
-#	include <istream>
-#	include <memory>
-#	include <vector>
+	#include <cstdint>
+	#include <istream>
+	#include <memory>
+	#include <vector>
 
 /**
  * @brief Пространство имен для основного класса Токена и сопутствующих функций

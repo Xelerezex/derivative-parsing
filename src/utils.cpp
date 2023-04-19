@@ -45,9 +45,9 @@ bool utils::isNumber(const std::string &inputStr)
 		}
 	}
 
-	auto non_digit =
-		std::find_if(it_begin, inputStr.end(),
-					 [](const char &c) { return !std::isdigit(c); });
+	auto non_digit = std::find_if(it_begin, inputStr.end(), [] (const char &c) {
+		return !std::isdigit(c);
+	});
 
 	if (*non_digit == '.')
 	{
@@ -58,8 +58,9 @@ bool utils::isNumber(const std::string &inputStr)
 		}
 	}
 
-	non_digit = std::find_if(non_digit, inputStr.end(),
-							 [](const char &c) { return !std::isdigit(c); });
+	non_digit = std::find_if(non_digit, inputStr.end(), [] (const char &c) {
+		return !std::isdigit(c);
+	});
 
 	return non_digit == inputStr.end();
 }
