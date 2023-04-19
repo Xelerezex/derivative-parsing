@@ -75,6 +75,8 @@ bool utils::isVariable(const std::string &inputStr)
 	return std::isalpha(inputStr.front());
 }
 
+// TODO [0]: Сделать функцию, скрытую в этом юните трансляции
+//           bool isSymbol(char) { повторяющийся код }
 bool utils::isLeftParenthesis(const std::string &inputStr)
 {
 	if (inputStr.empty() || inputStr.length() > 1)

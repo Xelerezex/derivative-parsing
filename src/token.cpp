@@ -68,7 +68,7 @@ token::Token::Token(const Token &&rhs) noexcept
 	copyAndSwap(rhs);
 }
 
-// TODO [0]: Доделать полостью createToken и протестировать
+// TODO [0]: Доделать полностью createToken и протестировать
 // TODO [1]: Написать соответствующие функции в utils для определения токена и
 // протестировать
 token::Token token::Token::createToken(const std::string &value)
