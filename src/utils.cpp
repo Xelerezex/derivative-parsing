@@ -64,3 +64,13 @@ bool utils::isNumber(const std::string &inputStr)
 
 	return non_digit == inputStr.end();
 }
+
+bool utils::isVariable(const std::string &inputStr)
+{
+	if (inputStr.empty() || inputStr.length() > 1)
+	{
+		return false;
+	}
+
+	return std::isalpha(inputStr.front());
+}

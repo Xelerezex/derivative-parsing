@@ -6,7 +6,7 @@
 	#include <vector>
 	#include <cassert>
 
-	/*!
+	/**
 	 * @brief Макрос позволяет вызывать assert с сообщением
 	 *
 	 * @param exp - проверяемое выражение
@@ -38,6 +38,16 @@ std::vector<std::string> split(const std::string &input, char seperator);
  * @return false - не считается числом
  */
 bool isNumber(const std::string &inputStr);
+
+/**
+ * @brief Функция опрделяет, считается ли данная на вход строка переменной.
+ *        Переменной считается только одна буква от A до Z и от a до z (A != a).
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается переменной
+ * @return false - не считается переменной
+ */
+bool isVariable(const std::string &inputStr);
 
 } // namespace utils
 

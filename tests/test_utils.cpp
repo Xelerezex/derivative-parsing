@@ -46,7 +46,7 @@ TEST(BasicSplitTest, DotSeparator)
 	ASSERT_EQ(output, expected);
 }
 
-/* ---------------------Тестирование функции split -------------------------- */
+/* ------------------ Тестирование функции isNumber ------------------------- */
 TEST(BasicIsNumberTest, Number)
 {
 	const std::string input{"123"};
@@ -172,6 +172,15 @@ TEST(BasicIsNumberTest, OneCharAndNegativeNumberWithDot)
 	ASSERT_EQ(output, false);
 }
 
+TEST(BasicIsNumberTest, EmptyString)
+{
+	const std::string input{""};
+
+	const bool output = utils::isNumber(input);
+
+	ASSERT_EQ(output, false);
+}
+
 TEST(BasicIsNumberTest, OneSpace)
 {
 	const std::string input{" "};
@@ -214,6 +223,61 @@ TEST(BasicIsNumberTest, Expression)
 
 	const bool output = utils::isNumber(input);
 
+	ASSERT_EQ(output, false);
+}
+
+/* ------------------ Тестирование функции isVariable ----------------------- */
+TEST(BasicIsVariableTest, EmptyString)
+{
+	const std::string input{""};
+
+	const bool output = utils::isVariable(input);
+
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsVariableTest, TooMuchSymbols)
+{
+	bool output = utils::isVariable("Z");
+	ASSERT_EQ(output, true);
+
+	output = utils::isVariable("ZZZ");
+	ASSERT_EQ(output, false);
+
+	output = utils::isVariable("aZ");
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsVariableTest, CharacterIsVariable)
+{
+	bool output = utils::isVariable("A");
+	ASSERT_EQ(output, true);
+
+	output = utils::isVariable("Z");
+	ASSERT_EQ(output, true);
+
+	output = utils::isVariable("a");
+	ASSERT_EQ(output, true);
+
+	output = utils::isVariable("z");
+	ASSERT_EQ(output, true);
+}
+
+TEST(BasicIsVariableTest, CharacterIsNotVariable)
+{
+	bool output = utils::isVariable("+");
+	ASSERT_EQ(output, false);
+
+	output = utils::isVariable("@");
+	ASSERT_EQ(output, false);
+
+	output = utils::isVariable("~");
+	ASSERT_EQ(output, false);
+
+	output = utils::isVariable("0");
+	ASSERT_EQ(output, false);
+
+	output = utils::isVariable("7");
 	ASSERT_EQ(output, false);
 }
 
