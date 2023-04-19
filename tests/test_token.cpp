@@ -66,6 +66,7 @@ TEST(TokenTypeSwappingTest, NotEqualTokens)
 }
 
 /* ----------------------- Тестирование класса Token ------------------------ */
+/* ==== Сравнение двух объектов: ==== */
 TEST(TokenCreationTest, EqualTokens)
 {
 	const token::Token first{
@@ -84,6 +85,7 @@ TEST(TokenCreationTest, NotEqualTokens)
 	ASSERT_FALSE(first == second);
 }
 
+/* ==== Создание объекта: ==== */
 TEST(TokenCopyTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
@@ -137,6 +139,7 @@ TEST(TokenMoveTest, CopyConstructorOperatorTokens)
 	ASSERT_EQ(general, (Token{"A", {Type::Variable, 2, Association::Right}}));
 }
 
+/* ==== Создание объекта через фабричный метод ==== */
 TEST(TokenCreationTest, EmptyInput)
 {
 	using namespace token;
@@ -162,6 +165,9 @@ TEST(TokenCreationTest, CreateNumber)
 
 	Token numOne = Token::createToken("10");
 	ASSERT_EQ(numOne, (Token{"10", {Type::Number, 0, Association::None}}));
+
+	Token unknown = Token::createToken("-.-10");
+	ASSERT_EQ(unknown, (Token{"-.-10", {Type::None, 0, Association::None}}));
 }
 
 /* ------------------------------- RUN ALL TESTS ---------------------------- */

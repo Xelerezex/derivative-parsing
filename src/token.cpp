@@ -84,6 +84,11 @@ token::Token token::Token::createToken(const std::string &value)
 	{
 		result = Token{value, {Type::Number, 0, Association::None}};
 	}
+	else
+	{
+		// Неизвестный токен
+		result = Token{value, {Type::None, 0, Association::None}};
+	}
 
 	return result;
 }
