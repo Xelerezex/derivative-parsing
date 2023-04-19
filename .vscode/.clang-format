@@ -103,7 +103,6 @@ BitFieldColonSpacing: Both
 
 # Configure each individual brace in BraceWrapping.
 BreakBeforeBraces: Custom
-
 BraceWrapping:
   # Opening brace under case label
   AfterCaseLabel: true
@@ -129,6 +128,8 @@ BraceWrapping:
   BeforeElse:      true
   # Do not place a trailing while loop below the close brace
   BeforeWhile: false
+  # Wrap lambda block
+  BeforeLambdaBody: false
   # Do not indent wrapped braces
   IndentBraces:    false
   # Empty function body braces are on multiple lines
