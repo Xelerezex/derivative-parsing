@@ -73,7 +73,10 @@ token::Token::Token(const Token &&rhs) noexcept
 // протестировать
 token::Token token::Token::createToken(const std::string &value)
 {
-	assert(!value.empty());
+	if (value.empty())
+	{
+		throw std::logic_error("Empty token string");
+	}
 
 	Token result{"Empty", {Type::None, 0, Association::None}};
 

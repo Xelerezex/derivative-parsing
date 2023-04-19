@@ -137,6 +137,25 @@ TEST(TokenMoveTest, CopyConstructorOperatorTokens)
 	ASSERT_EQ(general, (Token{"A", {Type::Variable, 2, Association::Right}}));
 }
 
+TEST(TokenCreationTest, EmptyInput)
+{
+	using namespace token;
+
+	EXPECT_THROW(
+		{
+			try
+			{
+				Token numOne = Token::createToken("");
+			}
+			catch (const std::logic_error &except)
+			{
+				EXPECT_STREQ("Empty token string", except.what());
+				throw;
+			}
+		},
+		std::logic_error);
+}
+
 TEST(TokenCreationTest, CreateNumber)
 {
 	using namespace token;
