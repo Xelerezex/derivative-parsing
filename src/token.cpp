@@ -84,6 +84,10 @@ token::Token token::Token::createToken(const std::string &value)
 	{
 		result = Token{value, {Type::Number, 0, Association::None}};
 	}
+	else if (utils::isVariable(value))
+	{
+		result = Token{value, {Type::Variable, 0, Association::None}};
+	}
 
 	return result;
 }

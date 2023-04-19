@@ -170,6 +170,23 @@ TEST(TokenCreationTest, CreateNumber)
 	ASSERT_EQ(unknown, (Token{"-.-10", {Type::None, 0, Association::None}}));
 }
 
+TEST(TokenCreationTest, CreateVariable)
+{
+	using namespace token;
+
+	Token variable = Token::createToken("X");
+	ASSERT_EQ(variable, (Token{"X", {Type::Variable, 0, Association::None}}));
+
+	variable = Token::createToken("x");
+	ASSERT_EQ(variable, (Token{"x", {Type::Variable, 0, Association::None}}));
+
+	Token unknown = Token::createToken("xX");
+	ASSERT_EQ(unknown, (Token{"xX", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken("-x");
+	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
+}
+
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
 int main (int argc, char** argv)
 {
