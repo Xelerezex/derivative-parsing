@@ -75,24 +75,31 @@ bool utils::isVariable(const std::string &inputStr)
 	return std::isalpha(inputStr.front());
 }
 
-// TODO [0]: Сделать функцию, скрытую в этом юните трансляции
-//           bool isSymbol(char) { повторяющийся код }
-bool utils::isLeftParenthesis(const std::string &inputStr)
+/**
+ * @brief Функция проверяет, что входящая строка не пуста и имеет только
+ *        одну букву, и, что эта буква равно символу
+ *
+ * @param inputStr - строка на вход
+ * @param symbol - символ для сравнения
+ * @return true - строка имеет тоже значение, что и символ
+ * @return false - строка имеет отличное от символа значение
+ */
+bool isSymbol (const std::string &inputStr, char symbol)
 {
 	if (inputStr.empty() || inputStr.length() > 1)
 	{
 		return false;
 	}
 
-	return *inputStr.c_str() == '(';
+	return *inputStr.c_str() == symbol;
+}
+
+bool utils::isLeftParenthesis(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '(');
 }
 
 bool utils::isRightParenthesis(const std::string &inputStr)
 {
-	if (inputStr.empty() || inputStr.length() > 1)
-	{
-		return false;
-	}
-
-	return *inputStr.c_str() == ')';
+	return isSymbol(inputStr, ')');
 }
