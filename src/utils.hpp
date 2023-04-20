@@ -31,7 +31,7 @@ namespace utils
 std::vector<std::string> split(const std::string &input, char seperator);
 
 /**
- * @brief Функция опрделяет, считается ли данная на вход строка числом
+ * @brief Функция определяет, считается ли данная на вход строка числом
  *
  * @param inputStr - строка на вход
  * @return true - считается числом
@@ -40,8 +40,8 @@ std::vector<std::string> split(const std::string &input, char seperator);
 bool isNumber(const std::string &inputStr);
 
 /**
- * @brief Функция опрделяет, считается ли данная на вход строка переменной.
- *        Переменной считается только одна буква от A до Z и от a до z (A != a).
+ * @brief Функция определяет, считается ли данная на вход строка переменной.
+ *        Переменной считается только одна буква от A до Z и от a до z (A != a)
  *
  * @param inputStr - строка на вход
  * @return true - считается переменной
@@ -50,8 +50,8 @@ bool isNumber(const std::string &inputStr);
 bool isVariable(const std::string &inputStr);
 
 /**
- * @brief Функция опрделяет, считается ли данная на вход строка левой круглой
- * 		  скобкой.
+ * @brief Функция определяет, считается ли данная на вход строка левой круглой
+ * 		  скобкой
  *
  * @param inputStr - строка на вход
  * @return true - считается левой круглой скобкой
@@ -60,14 +60,64 @@ bool isVariable(const std::string &inputStr);
 bool isLeftParenthesis(const std::string &inputStr);
 
 /**
- * @brief Функция опрделяет, считается ли данная на вход строка правой круглой
- * 		  скобкой.
+ * @brief Функция определяет, считается ли данная на вход строка правой круглой
+ * 		  скобкой
  *
  * @param inputStr - строка на вход
  * @return true - считается правой круглой скобкой
  * @return false - не считается правой круглой скобкой
  */
 bool isRightParenthesis(const std::string &inputStr);
+
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом сложения
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом сложения
+ * @return false - не считается символом сложения
+ */
+bool isPlus(const std::string &inputStr);
+
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом вычитания
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом вычитания
+ * @return false - не считается символом вычитания
+ */
+bool isMinus(const std::string &inputStr);
+
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом умножения
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом умножения
+ * @return false - не считается символом умножения
+ */
+bool isMultiplication(const std::string &inputStr);
+
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом деления
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом деления
+ * @return false - не считается символом деления
+ */
+bool isDivision(const std::string &inputStr);
+
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом возведения в степень
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом возведения в степень
+ * @return false - не считается символом возведения в степень
+ */
+bool isExponentiation(const std::string &inputStr);
 
 } // namespace utils
 

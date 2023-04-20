@@ -103,3 +103,28 @@ bool utils::isRightParenthesis(const std::string &inputStr)
 {
 	return isSymbol(inputStr, ')');
 }
+
+bool utils::isPlus(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '+');
+}
+
+bool utils::isMinus(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '-');
+}
+
+bool utils::isMultiplication(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '*');
+}
+
+bool utils::isDivision(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '/');
+}
+
+bool utils::isExponentiation(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '^');
+}
