@@ -88,6 +88,14 @@ token::Token token::Token::createToken(const std::string &value)
 	{
 		result = Token{value, {Type::Variable, 0, Association::None}};
 	}
+	else if (utils::isLeftParenthesis(value))
+	{
+		result = Token{value, {Type::LeftParenthesis, 0, Association::None}};
+	}
+	else if (utils::isRightParenthesis(value))
+	{
+		result = Token{value, {Type::RightParenthesis, 0, Association::None}};
+	}
 
 	return result;
 }
@@ -95,8 +103,8 @@ token::Token token::Token::createToken(const std::string &value)
 void token::Token::copyAndSwap(const Token &rhs) noexcept
 {
 	std::string tempStr{rhs.m_value};
-	TokenType tempType{rhs.m_type.type, rhs.m_type.precedence,
-					   rhs.m_type.association};
+	TokenType tempType{
+		rhs.m_type.type, rhs.m_type.precedence, rhs.m_type.association};
 
 	m_value.swap(tempStr);
 	token::swap(m_type, tempType);

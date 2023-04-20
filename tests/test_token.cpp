@@ -9,10 +9,10 @@ TEST(TokenTypeCreationTest, AllComparation)
 {
 	const unsigned int biggestPrecedence{10};
 
-	const token::TokenType second{token::Type::Number, biggestPrecedence,
-								  token::Association::Left};
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
+	const token::TokenType second{
+		token::Type::Number, biggestPrecedence, token::Association::Left};
+	const token::TokenType first{
+		token::Type::Number, biggestPrecedence, token::Association::Left};
 	ASSERT_TRUE(first == second);
 }
 
@@ -20,10 +20,10 @@ TEST(TokenTypeCreationTest, NotEqualType)
 {
 	const unsigned int biggestPrecedence{10};
 
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Variable, biggestPrecedence,
-								  token::Association::Left};
+	const token::TokenType first{
+		token::Type::Number, biggestPrecedence, token::Association::Left};
+	const token::TokenType second{
+		token::Type::Variable, biggestPrecedence, token::Association::Left};
 	ASSERT_FALSE(first == second);
 }
 
@@ -32,10 +32,10 @@ TEST(TokenTypeCreationTest, NotEqualPrecedence)
 	const unsigned int biggestPrecedence{10};
 	const unsigned int lowerPrecedence{8};
 
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Number, lowerPrecedence,
-								  token::Association::Left};
+	const token::TokenType first{
+		token::Type::Number, biggestPrecedence, token::Association::Left};
+	const token::TokenType second{
+		token::Type::Number, lowerPrecedence, token::Association::Left};
 	ASSERT_FALSE(first == second);
 }
 
@@ -43,10 +43,10 @@ TEST(TokenTypeCreationTest, NotEqualAssociation)
 {
 	const unsigned int biggestPrecedence{10};
 
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Number, biggestPrecedence,
-								  token::Association::Right};
+	const token::TokenType first{
+		token::Type::Number, biggestPrecedence, token::Association::Left};
+	const token::TokenType second{
+		token::Type::Number, biggestPrecedence, token::Association::Right};
 	ASSERT_FALSE(first == second);
 }
 
@@ -185,6 +185,36 @@ TEST(TokenCreationTest, CreateVariable)
 
 	unknown = Token::createToken("-x");
 	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateLeftParentesis)
+{
+	using namespace token;
+
+	Token variable = Token::createToken("(");
+	ASSERT_EQ(variable,
+			  (Token{"(", {Type::LeftParenthesis, 0, Association::None}}));
+
+	Token unknown = Token::createToken("(x");
+	ASSERT_EQ(unknown, (Token{"(x", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken("-(");
+	ASSERT_EQ(unknown, (Token{"-(", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateRightParentesis)
+{
+	using namespace token;
+
+	Token variable = Token::createToken(")");
+	ASSERT_EQ(variable,
+			  (Token{")", {Type::RightParenthesis, 0, Association::None}}));
+
+	Token unknown = Token::createToken("x)");
+	ASSERT_EQ(unknown, (Token{"x)", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken(")^");
+	ASSERT_EQ(unknown, (Token{")^", {Type::None, 0, Association::None}}));
 }
 
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
