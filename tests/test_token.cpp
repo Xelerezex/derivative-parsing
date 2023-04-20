@@ -217,6 +217,63 @@ TEST(TokenCreationTest, CreateRightParentesis)
 	ASSERT_EQ(unknown, (Token{")^", {Type::None, 0, Association::None}}));
 }
 
+TEST(TokenCreationTest, CreatePlus)
+{
+	using namespace token;
+
+	Token plus = Token::createToken("+");
+	ASSERT_EQ(plus, (Token{"+", {Type::Plus, 1, Association::Left}}));
+
+	Token unknown = Token::createToken("+x");
+	ASSERT_EQ(unknown, (Token{"+x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateMinus)
+{
+	using namespace token;
+
+	Token minus = Token::createToken("-");
+	ASSERT_EQ(minus, (Token{"-", {Type::Minus, 1, Association::Left}}));
+
+	Token unknown = Token::createToken("-x");
+	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateMultiplication)
+{
+	using namespace token;
+
+	Token multiplication = Token::createToken("*");
+	ASSERT_EQ(multiplication,
+			  (Token{"*", {Type::Multiplication, 2, Association::Left}}));
+
+	Token unknown = Token::createToken("*x");
+	ASSERT_EQ(unknown, (Token{"*x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateDivision)
+{
+	using namespace token;
+
+	Token division = Token::createToken("/");
+	ASSERT_EQ(division, (Token{"/", {Type::Division, 2, Association::Left}}));
+
+	Token unknown = Token::createToken("x/");
+	ASSERT_EQ(unknown, (Token{"x/", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateExponentiation)
+{
+	using namespace token;
+
+	Token exponentiation = Token::createToken("^");
+	ASSERT_EQ(exponentiation,
+			  (Token{"^", {Type::Exponentiation, 3, Association::Right}}));
+
+	Token unknown = Token::createToken("x^");
+	ASSERT_EQ(unknown, (Token{"x^", {Type::None, 0, Association::None}}));
+}
+
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
 int main (int argc, char** argv)
 {

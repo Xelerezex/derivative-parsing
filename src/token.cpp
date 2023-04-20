@@ -68,9 +68,6 @@ token::Token::Token(const Token &&rhs) noexcept
 	copyAndSwap(rhs);
 }
 
-// TODO [0]: Доделать полностью createToken и протестировать
-// TODO [1]: Написать соответствующие функции в utils для определения токена и
-// протестировать
 token::Token token::Token::createToken(const std::string &value)
 {
 	if (value.empty())
@@ -95,6 +92,26 @@ token::Token token::Token::createToken(const std::string &value)
 	else if (utils::isRightParenthesis(value))
 	{
 		result = Token{value, {Type::RightParenthesis, 0, Association::None}};
+	}
+	else if (utils::isPlus(value))
+	{
+		result = Token{value, {Type::Plus, 1, Association::Left}};
+	}
+	else if (utils::isMinus(value))
+	{
+		result = Token{value, {Type::Minus, 1, Association::Left}};
+	}
+	else if (utils::isMultiplication(value))
+	{
+		result = Token{value, {Type::Multiplication, 2, Association::Left}};
+	}
+	else if (utils::isDivision(value))
+	{
+		result = Token{value, {Type::Division, 2, Association::Left}};
+	}
+	else if (utils::isExponentiation(value))
+	{
+		result = Token{value, {Type::Exponentiation, 3, Association::Right}};
 	}
 
 	return result;

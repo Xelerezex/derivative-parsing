@@ -34,7 +34,22 @@ enum class Type : int8_t
 	LeftParenthesis,
 
 	/** Правая круглая скобка. */
-	RightParenthesis
+	RightParenthesis,
+
+	/** Знак сложения. */
+	Plus,
+
+	/** Знак вычитания. */
+	Minus,
+
+	/** Знак умножения. */
+	Multiplication,
+
+	/** Знак деления. */
+	Division,
+
+	/** Знак возведения в степень. */
+	Exponentiation,
 };
 
 /**
@@ -152,6 +167,13 @@ public:
 	 */
 	Token(const Token &&rhs) noexcept;
 
+	/**
+	 * @brief Фабричная функция создает Токен, относительно переданной,
+	 *        как аргумент строки
+	 *
+	 * @param value - строка, которую надо токенизировать
+	 * @return Token - объект Token
+	 */
 	static Token createToken(const std::string &value);
 
 	/**
