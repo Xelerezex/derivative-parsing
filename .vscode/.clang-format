@@ -14,7 +14,7 @@ AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 
 # Align array column and right justify the columns
-#AlignArayOfStructures: Right
+# AlignArayOfStructures: Right
 # Do not align equals signs of consecutive assignments
 AlignConsecutiveAssignments: None
 
@@ -41,17 +41,18 @@ AlignOperands:   Align
 # Do not align consecutive comments that follow a line of code
 AlignTrailingComments: false
 
-# If a function call or braced initializer list doesn’t fit on a line,
-# allow putting all arguments onto the next line, even if BinPackArguments is false.
+# If a function call or braced initializer list doesn't fit on a line,
+# allow putting all arguments onto the next line, even if
+# BinPackArguments is false.
 AllowAllArgumentsOnNextLine: true
 
-# If a constructor definition with a member initializer list doesn’t fit on a
+# If a constructor definition with a member initializer list doesn't fit on a
 # single line, allow putting all member initializers onto the next line, if
 # `ConstructorInitializerAllOnOneLineOrOnePerLine` is true. Note that this parameter
 # has no effect if `ConstructorInitializerAllOnOneLineOrOnePerLine` is false.
 AllowAllConstructorInitializersOnNextLine: true
 
-# If the function declaration doesn’t fit on a line, allow putting all
+# If the function declaration doesn't fit on a line, allow putting all
 # parameters of a function declaration onto the next line even if BinPackParameters is false.
 AllowAllParametersOfDeclarationOnNextLine: true
 
@@ -92,17 +93,18 @@ AttributeMacros: ['__capability', '__unused']
 
 # Function call arguments do not always have to have their own line if they don't
 # fit on one line
-BinPackArguments: true
+BinPackArguments: false
 
 # Function parameters do not always have to have their own line if they don't
 # fit on one line
-BinPackParameters: true
+BinPackParameters: false
 
 # Add one space on each side of the :
 BitFieldColonSpacing: Both
 
 # Configure each individual brace in BraceWrapping.
 BreakBeforeBraces: Custom
+
 BraceWrapping:
   # Opening brace under case label
   AfterCaseLabel: true
@@ -128,8 +130,6 @@ BraceWrapping:
   BeforeElse:      true
   # Do not place a trailing while loop below the close brace
   BeforeWhile: false
-  # Wrap lambda block
-  BeforeLambdaBody: false
   # Do not indent wrapped braces
   IndentBraces:    false
   # Empty function body braces are on multiple lines
@@ -223,11 +223,11 @@ IncludeCategories:
 
 # Specify a regular expression of suffixes that are allowed in the file-to-main-include mapping.
 # use this regex of allowed suffixes to the header stem.
-# A partial match is done, so that: - “” means “arbitrary suffix” - “$” means “no suffix”
+# A partial match is done, so that: - "" means "arbitrary suffix" - "$" means "no suffix"
 IncludeIsMainRegex: ''
 
 # Specify a regular expression for files being formatted that are allowed to be considered
-# “main” in the file-to-main-include mapping.
+# "main" in the file-to-main-include mapping.
 IncludeIsMainSourceRegex: ''
 
 # access modifiers are indented (or outdented) relative to the record members,
@@ -273,7 +273,7 @@ MacroBlockEnd:   ''
 # Maximum number of consecutive empty lines to keep
 MaxEmptyLinesToKeep: 1
 
-# Don’t indent namespaces
+# Don't indent namespaces
 NamespaceIndentation: None
 
 # A vector of macros which are used to open namespace blocks
