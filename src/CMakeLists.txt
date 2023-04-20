@@ -9,6 +9,7 @@ add_library(
         STATIC
         tokentype.cpp
         token.cpp
+        tokenlist.cpp
         utils.cpp)
 
 # Added possibility to use config-file macro:
