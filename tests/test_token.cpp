@@ -89,13 +89,13 @@ TEST(TokenCreationTest, NotEqualTokens)
 TEST(TokenCopyTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
-	Token none{"0", {Type::None, 0, Association::None}};
+	const Token none{"0", {Type::None, 0, Association::None}};
 
 	Token general{none};
 
 	ASSERT_EQ(general, none);
 
-	Token variable{"A", {Type::Variable, 2, Association::Right}};
+	const Token variable{"A", {Type::Variable, 2, Association::Right}};
 
 	general = variable;
 
@@ -112,8 +112,8 @@ TEST(TokenSwapTest, NoEqualTokens)
 
 	swap(first, second);
 
-	Token firstWas{"11", {Type::Number, 0, Association::None}};
-	Token secondWas{"A", {Type::Variable, 2, Association::Right}};
+	const Token firstWas{"11", {Type::Number, 0, Association::None}};
+	const Token secondWas{"A", {Type::Variable, 2, Association::Right}};
 
 	ASSERT_EQ(first, secondWas);
 	ASSERT_NE(first, firstWas);
@@ -148,7 +148,7 @@ TEST(TokenCreationTest, EmptyInput)
 		{
 			try
 			{
-				Token numOne = Token::createToken("");
+				const Token numOne = Token::createToken("");
 			}
 			catch (const std::logic_error &except)
 			{
@@ -163,10 +163,10 @@ TEST(TokenCreationTest, CreateNumber)
 {
 	using namespace token;
 
-	Token numOne = Token::createToken("10");
+	const Token numOne = Token::createToken("10");
 	ASSERT_EQ(numOne, (Token{"10", {Type::Number, 0, Association::None}}));
 
-	Token unknown = Token::createToken("-.-10");
+	const Token unknown = Token::createToken("-.-10");
 	ASSERT_EQ(unknown, (Token{"-.-10", {Type::None, 0, Association::None}}));
 }
 
@@ -191,7 +191,7 @@ TEST(TokenCreationTest, CreateLeftParentesis)
 {
 	using namespace token;
 
-	Token variable = Token::createToken("(");
+	const Token variable = Token::createToken("(");
 	ASSERT_EQ(variable,
 			  (Token{"(", {Type::LeftParenthesis, 0, Association::None}}));
 
@@ -206,7 +206,7 @@ TEST(TokenCreationTest, CreateRightParentesis)
 {
 	using namespace token;
 
-	Token variable = Token::createToken(")");
+	const Token variable = Token::createToken(")");
 	ASSERT_EQ(variable,
 			  (Token{")", {Type::RightParenthesis, 0, Association::None}}));
 
@@ -221,10 +221,10 @@ TEST(TokenCreationTest, CreatePlus)
 {
 	using namespace token;
 
-	Token plus = Token::createToken("+");
+	const Token plus = Token::createToken("+");
 	ASSERT_EQ(plus, (Token{"+", {Type::Plus, 1, Association::Left}}));
 
-	Token unknown = Token::createToken("+x");
+	const Token unknown = Token::createToken("+x");
 	ASSERT_EQ(unknown, (Token{"+x", {Type::None, 0, Association::None}}));
 }
 
@@ -232,10 +232,10 @@ TEST(TokenCreationTest, CreateMinus)
 {
 	using namespace token;
 
-	Token minus = Token::createToken("-");
+	const Token minus = Token::createToken("-");
 	ASSERT_EQ(minus, (Token{"-", {Type::Minus, 1, Association::Left}}));
 
-	Token unknown = Token::createToken("-x");
+	const Token unknown = Token::createToken("-x");
 	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
 }
 
@@ -243,11 +243,11 @@ TEST(TokenCreationTest, CreateMultiplication)
 {
 	using namespace token;
 
-	Token multiplication = Token::createToken("*");
+	const Token multiplication = Token::createToken("*");
 	ASSERT_EQ(multiplication,
 			  (Token{"*", {Type::Multiplication, 2, Association::Left}}));
 
-	Token unknown = Token::createToken("*x");
+	const Token unknown = Token::createToken("*x");
 	ASSERT_EQ(unknown, (Token{"*x", {Type::None, 0, Association::None}}));
 }
 
@@ -255,10 +255,10 @@ TEST(TokenCreationTest, CreateDivision)
 {
 	using namespace token;
 
-	Token division = Token::createToken("/");
+	const Token division = Token::createToken("/");
 	ASSERT_EQ(division, (Token{"/", {Type::Division, 2, Association::Left}}));
 
-	Token unknown = Token::createToken("x/");
+	const Token unknown = Token::createToken("x/");
 	ASSERT_EQ(unknown, (Token{"x/", {Type::None, 0, Association::None}}));
 }
 
@@ -266,11 +266,11 @@ TEST(TokenCreationTest, CreateExponentiation)
 {
 	using namespace token;
 
-	Token exponentiation = Token::createToken("^");
+	const Token exponentiation = Token::createToken("^");
 	ASSERT_EQ(exponentiation,
 			  (Token{"^", {Type::Exponentiation, 3, Association::Right}}));
 
-	Token unknown = Token::createToken("x^");
+	const Token unknown = Token::createToken("x^");
 	ASSERT_EQ(unknown, (Token{"x^", {Type::None, 0, Association::None}}));
 }
 

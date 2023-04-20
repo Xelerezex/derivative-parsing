@@ -13,7 +13,7 @@
 	 * 				(true или false на вход. Срабатывает если передан false)
 	 * @param msg - сообщение при ошибке
 	 */
-	#define assertm(exp, msg) assert(((void)msg, exp))
+	#define assertm(exp, msg) assert(((void)(msg), (exp)))
 
 /**
  * @brief Пространство имен с функциями общего назначения

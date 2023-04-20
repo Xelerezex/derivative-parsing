@@ -174,7 +174,7 @@ TEST(BasicIsNumberTest, OneCharAndNegativeNumberWithDot)
 
 TEST(BasicIsNumberTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isNumber(input);
 
@@ -229,7 +229,7 @@ TEST(BasicIsNumberTest, Expression)
 /* ------------------ Тестирование функции isVariable ----------------------- */
 TEST(BasicIsVariableTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isVariable(input);
 
@@ -284,7 +284,7 @@ TEST(BasicIsVariableTest, CharacterIsNotVariable)
 /* --------------- Тестирование функции isLeftParenthesis ------------------- */
 TEST(BasicIsLeftParenthesisTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isLeftParenthesis(input);
 	ASSERT_EQ(output, false);
@@ -306,7 +306,7 @@ TEST(BasicIsLeftParenthesisTest, CharacterIsLeftParenthesis)
 {
 	const std::string input{"("};
 
-	bool output = utils::isLeftParenthesis(input);
+	const bool output = utils::isLeftParenthesis(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -328,7 +328,7 @@ TEST(BasicIsLeftParenthesisTest, CharacterIsNoLeftParenthesis)
 /* --------------- Тестирование функции isRightParenthesis ------------------ */
 TEST(BasicIsRightParenthesisTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isRightParenthesis(input);
 	ASSERT_EQ(output, false);
@@ -350,7 +350,7 @@ TEST(BasicIsRightParenthesisTest, CharacterIsRightParenthesis)
 {
 	const std::string input{")"};
 
-	bool output = utils::isRightParenthesis(input);
+	const bool output = utils::isRightParenthesis(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -372,7 +372,7 @@ TEST(BasicIsRightParenthesisTest, CharacterIsNotRightParenthesis)
 /* ---------------- Тестирование функции isPlus ----------------------------- */
 TEST(BasicIsPlusTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isPlus(input);
 	ASSERT_EQ(output, false);
@@ -394,7 +394,7 @@ TEST(BasicIsPlusTest, CharacterIsPlus)
 {
 	const std::string input{"+"};
 
-	bool output = utils::isPlus(input);
+	const bool output = utils::isPlus(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -416,7 +416,7 @@ TEST(BasicIsPlusTest, CharacterIsNotPlus)
 /* ---------------- Тестирование функции isMinus ---------------------------- */
 TEST(BasicIsMinusTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isMinus(input);
 	ASSERT_EQ(output, false);
@@ -438,7 +438,7 @@ TEST(BasicIsMinusTest, CharacterIsMinus)
 {
 	const std::string input{"-"};
 
-	bool output = utils::isMinus(input);
+	const bool output = utils::isMinus(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -460,7 +460,7 @@ TEST(BasicIsMinusTest, CharacterIsNotMinus)
 /* ---------------- Тестирование функции isMultiplication ------------------- */
 TEST(BasicIsMultiplicationTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isMultiplication(input);
 	ASSERT_EQ(output, false);
@@ -482,7 +482,7 @@ TEST(BasicIsMultiplicationTest, CharacterIsMultiplication)
 {
 	const std::string input{"*"};
 
-	bool output = utils::isMultiplication(input);
+	const bool output = utils::isMultiplication(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -504,7 +504,7 @@ TEST(BasicIsMultiplicationTest, CharacterIsNotMultiplication)
 /* ---------------- Тестирование функции isDivision ------------------------- */
 TEST(BasicIsDivisionTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isDivision(input);
 	ASSERT_EQ(output, false);
@@ -526,7 +526,7 @@ TEST(BasicIsDivisionTest, CharacterIsDivision)
 {
 	const std::string input{"/"};
 
-	bool output = utils::isDivision(input);
+	const bool output = utils::isDivision(input);
 	ASSERT_EQ(output, true);
 }
 
@@ -548,7 +548,7 @@ TEST(BasicIsDivisionTest, CharacterIsNotDivision)
 /* ---------------- Тестирование функции isExponentiation ------------------- */
 TEST(BasicIsExponentiationTest, EmptyString)
 {
-	const std::string input{""};
+	const std::string input;
 
 	const bool output = utils::isExponentiation(input);
 	ASSERT_EQ(output, false);
@@ -570,7 +570,7 @@ TEST(BasicIsExponentiationTest, CharacterIsExponentiation)
 {
 	const std::string input{"^"};
 
-	bool output = utils::isExponentiation(input);
+	const bool output = utils::isExponentiation(input);
 	ASSERT_EQ(output, true);
 }
 

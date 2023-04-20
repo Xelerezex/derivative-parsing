@@ -135,7 +135,7 @@ public:
 	 * @param value - значение токена
 	 * @param type  - тип токена
 	 */
-	explicit Token(const std::string &value, const TokenType &type);
+	explicit Token(std::string value, const TokenType &type);
 
 	/**
 	 * @brief Оператор присваивания копии.
