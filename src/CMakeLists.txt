@@ -6,7 +6,8 @@ set(
 
 add_library(
     ${SOURCE_TARGET_NAME} 
-        STATIC 
+        STATIC
+        tokentype.cpp
         token.cpp
         utils.cpp)
 

@@ -6,6 +6,7 @@ enable_testing()
 set(LIST TESTS)
 
 # Append files name in list
+list(APPEND TESTS test_token_type)
 list(APPEND TESTS test_token)
 list(APPEND TESTS test_utils)
 
