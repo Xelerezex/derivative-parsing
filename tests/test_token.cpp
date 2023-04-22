@@ -25,10 +25,18 @@ TEST(TokenCreationTest, NotEqualTokens)
 }
 
 /* ==== Создание объекта: ==== */
+TEST(TokenCreationTest, DefaultTokenCreation)
+{
+	using namespace token;
+	const Token none;
+
+	ASSERT_EQ(none, (Token{"Empty", {Type::None, 0, Association::None}}));
+}
+
 TEST(TokenCopyTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
-	const Token none{"0", {Type::None, 0, Association::None}};
+	const Token none;
 
 	Token general{none};
 
@@ -65,11 +73,11 @@ TEST(TokenMoveTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
 
-	Token none{"0", {Type::None, 0, Association::None}};
+	Token none;
 
 	Token general = std::move(none);
 
-	ASSERT_EQ(general, (Token{"0", {Type::None, 0, Association::None}}));
+	ASSERT_EQ(general, (Token{"Empty", {Type::None, 0, Association::None}}));
 
 	Token variable{"A", {Type::Variable, 2, Association::Right}};
 
