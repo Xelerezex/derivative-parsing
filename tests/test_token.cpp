@@ -4,197 +4,217 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-/* ------------------ Тестирование сравнения типов токена ------------------- */
-TEST(TokenTypeCreationTest, AllComparation)
-{
-	const unsigned int biggestPrecedence{10};
-
-	const token::TokenType second{token::Type::Number, biggestPrecedence,
-								  token::Association::Left};
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	ASSERT_TRUE(first == second);
-}
-
-TEST(TokenTypeCreationTest, NotEqualType)
-{
-	const unsigned int biggestPrecedence{10};
-
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Variable, biggestPrecedence,
-								  token::Association::Left};
-	ASSERT_FALSE(first == second);
-}
-
-TEST(TokenTypeCreationTest, NotEqualPrecedence)
-{
-	const unsigned int biggestPrecedence{10};
-	const unsigned int lowerPrecedence{8};
-
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Number, lowerPrecedence,
-								  token::Association::Left};
-	ASSERT_FALSE(first == second);
-}
-
-TEST(TokenTypeCreationTest, NotEqualAssociation)
-{
-	const unsigned int biggestPrecedence{10};
-
-	const token::TokenType first{token::Type::Number, biggestPrecedence,
-								 token::Association::Left};
-	const token::TokenType second{token::Type::Number, biggestPrecedence,
-								  token::Association::Right};
-	ASSERT_FALSE(first == second);
-}
-
-/* --------------------- Тестирование сравнения Токенов --------------------- */
+/* ----------------------- Тестирование класса Token ------------------------ */
+/* ==== Сравнение двух объектов: ==== */
 TEST(TokenCreationTest, EqualTokens)
 {
 	const token::Token first{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	const token::Token second{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	ASSERT_TRUE(first == second);
 }
 
 TEST(TokenCreationTest, NotEqualTokens)
 {
 	const token::Token first{
-		"17", {token::Type::Number, 0, token::Association::None}
-	};
+		"17", {token::Type::Number, 0, token::Association::None}};
 	const token::Token second{
-		"42", {token::Type::Number, 0, token::Association::None}
-	};
+		"42", {token::Type::Number, 0, token::Association::None}};
 	ASSERT_FALSE(first == second);
 }
 
-/* --------------------- Тестирование Токенизации строки -------------------- */
-/* ---- Токенизация только числа */
-TEST(TestTokenParse, TokenizerEmptyString)
+/* ==== Создание объекта: ==== */
+TEST(TokenCopyTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
+	const Token none{"0", {Type::None, 0, Association::None}};
 
-	std::stringstream input{""};
-	std::vector<Token> output;
-	Error result{Error::None};
+	Token general{none};
 
-	result = token::tokenize(input, output);
+	ASSERT_EQ(general, none);
 
-	ASSERT_EQ(output.size(), 0);
-	ASSERT_EQ(result, token::Error::EmptyString);
+	const Token variable{"A", {Type::Variable, 2, Association::Right}};
+
+	general = variable;
+
+	ASSERT_NE(general, none);
+	ASSERT_EQ(general, variable);
 }
 
-TEST(TestTokenParse, TokenizerNumbers)
+TEST(TokenSwapTest, NoEqualTokens)
 {
 	using namespace token;
 
-	const std::string dataForTokenize = {"123 1 1000 3 17"};
+	Token first{"11", {Type::Number, 0, Association::None}};
+	Token second{"A", {Type::Variable, 2, Association::Right}};
 
-	const int expectedSize = 5;
-	std::stringstream input{dataForTokenize};
-	std::vector<Token> output;
-	Error result{Error::None};
+	swap(first, second);
 
-	std::vector<Token> expected;
-	for (const auto &item : utils::split(dataForTokenize, ' '))
-	{
-		expected.push_back({
-			item, {Type::Number, 0, Association::None}
-		  });
-	}
+	const Token firstWas{"11", {Type::Number, 0, Association::None}};
+	const Token secondWas{"A", {Type::Variable, 2, Association::Right}};
 
-	result = token::tokenize(input, output);
+	ASSERT_EQ(first, secondWas);
+	ASSERT_NE(first, firstWas);
 
-	ASSERT_EQ(result, token::Error::None);
-	ASSERT_EQ(output.size(), expectedSize);
-	ASSERT_EQ(output, expected);
+	ASSERT_EQ(second, firstWas);
+	ASSERT_NE(second, secondWas);
 }
 
-/*
-TODO: Create tokenization and for negative numbers
-TEST(TestTokenParse, TokenizerNegativeNumbers)
+TEST(TokenMoveTest, CopyConstructorOperatorTokens)
 {
 	using namespace token;
 
-	std::string dataForTokenize = {"-1 -88 1000 500 -42 666"};
+	Token none{"0", {Type::None, 0, Association::None}};
 
-	const int expectedSize = 6;
-	std::stringstream input{dataForTokenize};
-	std::vector<Token> output;
-	Error result{Error::None};
+	Token general = std::move(none);
 
-	std::vector<Token> expected;
-	for (const auto &item : utils::split(dataForTokenize, ' '))
-	{
-		expected.push_back({item, {Type::Number, 0, Association::None}});
-	}
+	ASSERT_EQ(general, (Token{"0", {Type::None, 0, Association::None}}));
 
-	result = token::tokenize(input, output);
+	Token variable{"A", {Type::Variable, 2, Association::Right}};
 
-	ASSERT_EQ(result, token::Error::None);
-	ASSERT_EQ(output.size(), expectedSize);
-	ASSERT_EQ(output, expected);
-}
-*/
+	general = std::move(variable);
 
-/* ---- Токенизация только переменной */
-TEST(TestTokenParse, TokenizerVariables)
-{
-	using namespace token;
-
-	const std::string dataForTokenize = {"A Z c a"};
-
-	const int expectedSize = 4;
-	std::stringstream input{dataForTokenize};
-	std::vector<Token> output;
-	Error result{Error::None};
-
-	std::vector<Token> expected;
-	for (const auto &item : utils::split(dataForTokenize, ' '))
-	{
-		expected.push_back({
-			item, {Type::Variable, 0, Association::None}
-		});
-	}
-
-	result = token::tokenize(input, output);
-
-	ASSERT_EQ(result, token::Error::None);
-	ASSERT_EQ(output.size(), expectedSize);
-	ASSERT_EQ(output, expected);
+	ASSERT_EQ(general, (Token{"A", {Type::Variable, 2, Association::Right}}));
 }
 
-TEST(TestTokenParse, TokenizerVarAndNum)
+/* ==== Создание объекта через фабричный метод ==== */
+TEST(TokenCreationTest, EmptyInput)
 {
 	using namespace token;
 
-	const std::string dataForTokenize = {"A 10 z"};
+	EXPECT_THROW(
+		{
+			try
+			{
+				const Token numOne = Token::createToken("");
+			}
+			catch (const std::logic_error &except)
+			{
+				EXPECT_STREQ("Empty token string", except.what());
+				throw;
+			}
+		},
+		std::logic_error);
+}
 
-	const int expectedSize = 3;
-	std::stringstream input{dataForTokenize};
-	std::vector<Token> output;
-	Error result{Error::None};
+TEST(TokenCreationTest, CreateNumber)
+{
+	using namespace token;
 
-	const std::vector<Token> expected{
-		{"A",  {Type::Variable, 0, Association::None}},
-		{"10", {Type::Number, 0, Association::None}  },
-		{"z",  {Type::Variable, 0, Association::None}},
-	};
+	const Token numOne = Token::createToken("10");
+	ASSERT_EQ(numOne, (Token{"10", {Type::Number, 0, Association::None}}));
 
-	result = token::tokenize(input, output);
+	const Token unknown = Token::createToken("-.-10");
+	ASSERT_EQ(unknown, (Token{"-.-10", {Type::None, 0, Association::None}}));
+}
 
-	ASSERT_EQ(result, token::Error::None);
-	ASSERT_EQ(output.size(), expectedSize);
-	ASSERT_EQ(output, expected);
+TEST(TokenCreationTest, CreateVariable)
+{
+	using namespace token;
+
+	Token variable = Token::createToken("X");
+	ASSERT_EQ(variable, (Token{"X", {Type::Variable, 0, Association::None}}));
+
+	variable = Token::createToken("x");
+	ASSERT_EQ(variable, (Token{"x", {Type::Variable, 0, Association::None}}));
+
+	Token unknown = Token::createToken("xX");
+	ASSERT_EQ(unknown, (Token{"xX", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken("-x");
+	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateLeftParentesis)
+{
+	using namespace token;
+
+	const Token variable = Token::createToken("(");
+	ASSERT_EQ(variable,
+			  (Token{"(", {Type::LeftParenthesis, 0, Association::None}}));
+
+	Token unknown = Token::createToken("(x");
+	ASSERT_EQ(unknown, (Token{"(x", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken("-(");
+	ASSERT_EQ(unknown, (Token{"-(", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateRightParentesis)
+{
+	using namespace token;
+
+	const Token variable = Token::createToken(")");
+	ASSERT_EQ(variable,
+			  (Token{")", {Type::RightParenthesis, 0, Association::None}}));
+
+	Token unknown = Token::createToken("x)");
+	ASSERT_EQ(unknown, (Token{"x)", {Type::None, 0, Association::None}}));
+
+	unknown = Token::createToken(")^");
+	ASSERT_EQ(unknown, (Token{")^", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreatePlus)
+{
+	using namespace token;
+
+	const Token plus = Token::createToken("+");
+	ASSERT_EQ(plus, (Token{"+", {Type::Plus, 1, Association::Left}}));
+
+	const Token unknown = Token::createToken("+x");
+	ASSERT_EQ(unknown, (Token{"+x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateMinus)
+{
+	using namespace token;
+
+	const Token minus = Token::createToken("-");
+	ASSERT_EQ(minus, (Token{"-", {Type::Minus, 1, Association::Left}}));
+
+	const Token unknown = Token::createToken("-x");
+	ASSERT_EQ(unknown, (Token{"-x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateMultiplication)
+{
+	using namespace token;
+
+	const Token multiplication = Token::createToken("*");
+	ASSERT_EQ(multiplication,
+			  (Token{"*", {Type::Multiplication, 2, Association::Left}}));
+
+	const Token unknown = Token::createToken("*x");
+	ASSERT_EQ(unknown, (Token{"*x", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateDivision)
+{
+	using namespace token;
+
+	const Token division = Token::createToken("/");
+	ASSERT_EQ(division, (Token{"/", {Type::Division, 2, Association::Left}}));
+
+	const Token unknown = Token::createToken("x/");
+	ASSERT_EQ(unknown, (Token{"x/", {Type::None, 0, Association::None}}));
+}
+
+TEST(TokenCreationTest, CreateExponentiation)
+{
+	using namespace token;
+
+	const Token exponentiation = Token::createToken("^");
+	ASSERT_EQ(exponentiation,
+			  (Token{"^", {Type::Exponentiation, 3, Association::Right}}));
+
+	const Token unknown = Token::createToken("x^");
+	ASSERT_EQ(unknown, (Token{"x^", {Type::None, 0, Association::None}}));
 }
 
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
-int main(int argc, char **argv)
+int main (int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

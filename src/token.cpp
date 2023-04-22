@@ -5,132 +5,111 @@
 #include <config-file.hpp>
 
 #ifdef WHEN_DEBUG_MODE
-#	define DEBUG_UNUSED(x) (void) (x);
-#	include <chrono>
-#	include <iostream>
-#	include <thread>
+	#define DEBUG_UNUSED(x) (void)(x);
+	#include <chrono>
+	#include <iostream>
+	#include <thread>
+	#include <utility>
 #endif
 
-bool token::operator==(const token::TokenType &rhs, const token::TokenType &lhs)
-{
-	return static_cast<int8_t>(rhs.type) == static_cast<int8_t>(lhs.type)
-		&& static_cast<unsigned int>(rhs.precedence)
-			   == static_cast<unsigned int>(lhs.precedence)
-		&& static_cast<int8_t>(rhs.association)
-			   == static_cast<int8_t>(lhs.association);
-}
+// Объявление функции, из файла tokentype.hpp
+void token::swap(token::TokenType &lhs, token::TokenType &rhs);
 
+/* -------------------------------------------------------------------------- */
 bool token::operator==(const Token &rhs, const Token &lhs)
 {
-	return rhs.value == lhs.value && rhs.type == lhs.type;
+	return rhs.m_value == lhs.m_value && rhs.m_type == lhs.m_type;
 }
 
-/**
- * @brief Шаблонная функция, используемая только в этой единице трансляции.
- *        Нужна для парсинга целого "слова" из стрима (будь то числоЮ знак или
- * реальное слово)
- *
- * @tparam Type - шаблонный тип
- * @param  stream - стрим, из которого будет считываться слово
- * @param  output - спаршенное строковое значение
- * @return token::Error - код ошибки. Error::None - в случае успеха
- */
-template <typename Type>
-token::Error parseUnit(std::istream &stream, std::string &output)
+void token::swap(Token &lhs, Token &rhs)
 {
-	token::Error result{token::Error::None};
+	std::swap(lhs.m_value, rhs.m_value);
+	token::swap(lhs.m_type, rhs.m_type);
+}
 
-	Type word;
-	if (!(stream >> word))
+token::Token::Token(std::string value, const TokenType &type)
+	: m_value{std::move(value)}
+	, m_type{type}
+{
+}
+
+token::Token &token::Token::operator=(const Token &rhs) noexcept
+{
+	copyAndSwap(rhs);
+	return *this;
+}
+
+token::Token &token::Token::operator=(const Token &&rhs) noexcept
+{
+	copyAndSwap(rhs);
+	return *this;
+}
+
+token::Token::Token(const Token &rhs) noexcept
+{
+	copyAndSwap(rhs);
+}
+
+token::Token::Token(const Token &&rhs) noexcept
+{
+	copyAndSwap(rhs);
+}
+
+token::Token token::Token::createToken(const std::string &value)
+{
+	if (value.empty())
 	{
-		return result = token::Error::WordParsingError;
+		throw std::logic_error("Empty token string");
 	}
 
-	// Если тип является строкой, его не надо приводить к строке
-	if constexpr (std::is_same_v<Type, std::string>)
-	{
-		output = word;
-	}
-	else
-	{
-		output = std::to_string(word);
-	}
+	Token result{value, {Type::None, 0, Association::None}};
 
-#ifdef WHEN_DEBUG_MODE
-	std::cout << "WORD = " << output << std::endl;
-#endif
+	if (utils::isNumber(value))
+	{
+		result = Token{value, {Type::Number, 0, Association::None}};
+	}
+	else if (utils::isVariable(value))
+	{
+		result = Token{value, {Type::Variable, 0, Association::None}};
+	}
+	else if (utils::isLeftParenthesis(value))
+	{
+		result = Token{value, {Type::LeftParenthesis, 0, Association::None}};
+	}
+	else if (utils::isRightParenthesis(value))
+	{
+		result = Token{value, {Type::RightParenthesis, 0, Association::None}};
+	}
+	else if (utils::isPlus(value))
+	{
+		result = Token{value, {Type::Plus, 1, Association::Left}};
+	}
+	else if (utils::isMinus(value))
+	{
+		result = Token{value, {Type::Minus, 1, Association::Left}};
+	}
+	else if (utils::isMultiplication(value))
+	{
+		result = Token{value, {Type::Multiplication, 2, Association::Left}};
+	}
+	else if (utils::isDivision(value))
+	{
+		result = Token{value, {Type::Division, 2, Association::Left}};
+	}
+	else if (utils::isExponentiation(value))
+	{
+		result = Token{value, {Type::Exponentiation, 3, Association::Right}};
+	}
 
 	return result;
 }
 
-token::Error token::tokenize(std::istream &stream,
-							 std::vector<token::Token> &tokens)
+void token::Token::copyAndSwap(const Token &rhs) noexcept
 {
-	Error result{Error::None};
+	std::string tempStr{rhs.m_value};
+	TokenType tempType{
+		rhs.m_type.type, rhs.m_type.precedence, rhs.m_type.association};
 
-	// В случае пустой строки, выкидываем ошибку:
-	if (stream.peek() == std::char_traits<char>::eof())
-	{
-		return Error::EmptyString;
-	}
-
-	utils::UnitParser unit{stream};
-
-	int character{0};
-	while (stream.peek() != std::char_traits<char>::eof())
-	{
-		// Проверяем следующий символ
-		character = stream.peek();
-
-		// Выкидываем пробелы из стрима
-		if (std::isspace(character) != 0)
-		{
-			char space = 0;
-			stream.get(space);
-			continue;
-		}
-
-		if (std::isdigit(character) != 0) // Если встреченный символ - число
-		{
-			int number{0};
-
-			// Парсим числовое значение
-			if (unit.parseInteger(number) != utils::UnitParser::Error::None)
-			{
-				result = Error::WordParsingError;
-				break;
-			}
-
-			// При успешном парсинге - добавляем его к остальным токенам
-			tokens.push_back({
-				std::to_string(number), {Type::Number, 0, Association::None}
-			});
-		}
-		else if (std::isalpha(character) != 0) // Если встреченный символ -
-											   // переменная (буква)
-		{
-			char alphabetic;
-
-			// Парсим буквенное значение
-			if (unit.parseCharacter(alphabetic)
-				!= utils::UnitParser::Error::None)
-			{
-				result = Error::WordParsingError;
-				break;
-			}
-
-			// При успешном парсинге - добавляем его к остальным токенам
-			tokens.push_back({
-				std::string{alphabetic},
-				{Type::Variable, 0, Association::None}
-			  });
-		}
-		else
-		{
-			result = Error::UnknownToken;
-			break;
-		}
-	}
-
-	return result;
+	m_value.swap(tempStr);
+	token::swap(m_type, tempType);
 }

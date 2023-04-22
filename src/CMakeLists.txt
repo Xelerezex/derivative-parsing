@@ -6,8 +6,10 @@ set(
 
 add_library(
     ${SOURCE_TARGET_NAME} 
-        STATIC 
+        STATIC
+        tokentype.cpp
         token.cpp
+        tokenlist.cpp
         utils.cpp)
 
 # Added possibility to use config-file macro:

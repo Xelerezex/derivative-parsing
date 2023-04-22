@@ -2,53 +2,6 @@
 
 #include <istream>
 
-utils::UnitParser::UnitParser(std::istream &streamToParse)
-	: m_stream{streamToParse}
-	, m_lastError{utils::UnitParser::Error::None}
-{
-}
-
-utils::UnitParser::Error utils::UnitParser::getLastError() const
-{
-	return m_lastError;
-}
-
-utils::UnitParser::Error utils::UnitParser::parseInteger(int &outputNumber)
-{
-	int integer{0};
-
-	if (!(m_stream >> integer))
-	{
-		setLastError(Error::ParsingError);
-	}
-
-	// Отдаем спаршеное значение
-	outputNumber = integer;
-
-	return getLastError();
-}
-
-utils::UnitParser::Error
-utils::UnitParser::parseCharacter(char &outputCharacter)
-{
-	char character{0};
-
-	if (!(m_stream >> character))
-	{
-		setLastError(Error::ParsingError);
-	}
-
-	// Отдаем спаршеное значение
-	outputCharacter = character;
-
-	return getLastError();
-}
-
-void utils::UnitParser::setLastError(Error lastError)
-{
-	m_lastError = lastError;
-}
-
 std::vector<std::string> utils::split(const std::string &input, char seperator)
 {
 	if (input.empty())
@@ -73,4 +26,106 @@ std::vector<std::string> utils::split(const std::string &input, char seperator)
 	output.push_back(input.substr(prevPos, pos - prevPos));
 
 	return output;
+}
+
+bool utils::isNumber(const std::string &inputStr)
+{
+	if (inputStr.empty())
+	{
+		return false;
+	}
+
+	auto it_begin = inputStr.begin();
+	if (*inputStr.begin() == '+' || *inputStr.begin() == '-')
+	{
+		it_begin = std::next(it_begin);
+		if (it_begin == inputStr.end())
+		{
+			return false;
+		}
+	}
+
+	auto non_digit =
+		std::find_if(it_begin, inputStr.end(), [] (const char &chr) {
+			return !static_cast<bool>(std::isdigit(chr));
+		});
+
+	if (*non_digit == '.')
+	{
+		non_digit = std::next(non_digit);
+		if (non_digit == inputStr.end())
+		{
+			return false;
+		}
+	}
+
+	non_digit = std::find_if(non_digit, inputStr.end(), [] (const char &chr) {
+		return !static_cast<bool>(std::isdigit(chr));
+	});
+
+	return non_digit == inputStr.end();
+}
+
+bool utils::isVariable(const std::string &inputStr)
+{
+	if (inputStr.empty() || inputStr.length() > 1)
+	{
+		return false;
+	}
+
+	return static_cast<bool>(std::isalpha(inputStr.front()));
+}
+
+/**
+ * @brief Функция проверяет, что входящая строка не пуста и имеет только
+ *        одну букву, и, что эта буква равно символу
+ *
+ * @param inputStr - строка на вход
+ * @param symbol - символ для сравнения
+ * @return true - строка имеет тоже значение, что и символ
+ * @return false - строка имеет отличное от символа значение
+ */
+bool isSymbol (const std::string &inputStr, char symbol)
+{
+	if (inputStr.empty() || inputStr.length() > 1)
+	{
+		return false;
+	}
+
+	return *inputStr.c_str() == symbol;
+}
+
+bool utils::isLeftParenthesis(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '(');
+}
+
+bool utils::isRightParenthesis(const std::string &inputStr)
+{
+	return isSymbol(inputStr, ')');
+}
+
+bool utils::isPlus(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '+');
+}
+
+bool utils::isMinus(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '-');
+}
+
+bool utils::isMultiplication(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '*');
+}
+
+bool utils::isDivision(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '/');
+}
+
+bool utils::isExponentiation(const std::string &inputStr)
+{
+	return isSymbol(inputStr, '^');
 }
