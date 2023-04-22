@@ -6,6 +6,12 @@
 	#include <vector>
 	#include <cassert>
 
+	#include <config-file.hpp>
+
+	#ifdef WHEN_DEBUG_MODE
+		#define DEBUG_UNUSED(x) (void)(x);
+	#endif
+
 	/**
 	 * @brief Макрос позволяет вызывать assert с сообщением
 	 *

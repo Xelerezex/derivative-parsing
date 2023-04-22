@@ -1,13 +1,9 @@
 #include "token.hpp"
 
-#include <config-file.hpp>
+#include "utils.hpp"
 #include <iostream>
 
-#ifdef WHEN_DEBUG_MODE
-#	define DEBUG_UNUSED(x) (void) (x);
-#endif
-
-int main(int argc, char *argv[])
+int main (int argc, char* argv[])
 {
 	DEBUG_UNUSED(argc);
 	DEBUG_UNUSED(argv);
