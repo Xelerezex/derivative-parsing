@@ -48,6 +48,36 @@ public:
 	TokenList() = default;
 
 	/**
+	 * @brief Конструктор копирования
+	 *
+	 * @param rhs  - список с токенами, которые копируется
+	 */
+	TokenList(const TokenList &rhs) noexcept;
+
+	/**
+	 * @brief Констуктор перемещения
+	 *
+	 * @param rhs  - rvalue значение списока с токенами
+	 */
+	TokenList(const TokenList &&rhs) noexcept;
+
+	/**
+	 * @brief Оператор присваивания копии
+	 *
+	 * @param rhs - список с токенами, которые копируются
+	 * @return TokenList& - ссылка на этот объект
+	 */
+	TokenList &operator=(const TokenList &rhs) noexcept;
+
+	/**
+	 * @brief Move-оператор присваивания
+	 *
+	 * @param rhs - rvalue значение списока с токенами
+	 * @return TokenList& - ссылка на этот объект
+	 */
+	TokenList &operator=(const TokenList &&rhs) noexcept;
+
+	/**
 	 * @brief Метод парсит строку, полученную на вход, и превращает её
 	 *        вектор, со связками Значение-Токен (класс Token).
 	 *
@@ -61,6 +91,15 @@ public:
 	 * @brief Деструктор
 	 */
 	~TokenList() = default;
+
+private:
+	/**
+	 * @brief Функция копирует объект, и потом подменяет его поля с полями этого
+	 *        класса (Copy-n-Swap идиома).
+	 *
+	 * @param rhs - копируемый список с токенами
+	 */
+	void copyAndSwap(TokenList rhs) noexcept;
 
 private:
 	/** Вектор со всеми Токенами */
