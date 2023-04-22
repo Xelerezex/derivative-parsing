@@ -31,6 +31,20 @@ public:
 	explicit Token(std::string value, const TokenType &type);
 
 	/**
+	 * @brief Конструктор копирования
+	 *
+	 * @param rhs  - токен, который копируется
+	 */
+	Token(const Token &rhs) noexcept;
+
+	/**
+	 * @brief Констуктор перемещения
+	 *
+	 * @param rhs  - rvalue токен
+	 */
+	Token(const Token &&rhs) noexcept;
+
+	/**
 	 * @brief Оператор присваивания копии.
 	 *
 	 * @param rhs - токен, который копируется
@@ -47,18 +61,14 @@ public:
 	Token &operator=(const Token &&rhs) noexcept;
 
 	/**
-	 * @brief Конструктор копирования
-	 *
-	 * @param rhs  - токен, который копируется
+	 * @brief Деструктор
 	 */
-	Token(const Token &rhs) noexcept;
+	~Token() = default;
 
 	/**
-	 * @brief Констуктор перемещения
-	 *
-	 * @param rhs  - rvalue токен
+	 * @brief Удаленный дефолтный конструктор
 	 */
-	Token(const Token &&rhs) noexcept;
+	Token() = delete;
 
 	/**
 	 * @brief Фабричная функция создает Токен, относительно переданной,
@@ -68,16 +78,6 @@ public:
 	 * @return Token - объект Token
 	 */
 	static Token createToken(const std::string &value);
-
-	/**
-	 * @brief Деструктор
-	 */
-	~Token() = default;
-
-	/**
-	 * @brief Удаленный дефолтный конструктор
-	 */
-	Token() = delete;
 
 	/**
 	 * @brief Оператор проверки равенства двух токенов
@@ -102,9 +102,9 @@ private:
 	 * @brief Функция копирует объект, и потом подменяет его поля с полями этого
 	 *        класса (Copy-n-Swap идиома).
 	 *
-	 * @param rhs - токен, чьи поля перейдут этому классу.
+	 * @param rhs - копируемый токен, чьи поля перейдут этому классу
 	 */
-	void copyAndSwap(const Token &rhs) noexcept;
+	void copyAndSwap(Token rhs) noexcept;
 
 private:
 	/* Значение токена */

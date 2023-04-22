@@ -33,6 +33,18 @@ token::Token::Token(std::string value, const TokenType &type)
 {
 }
 
+token::Token::Token(const Token &rhs) noexcept
+	: m_value{rhs.m_value}
+	, m_type{rhs.m_type}
+{
+}
+
+token::Token::Token(const Token &&rhs) noexcept
+	: m_value{std::move(rhs.m_value)}
+	, m_type{std::move(rhs.m_type)}
+{
+}
+
 token::Token &token::Token::operator=(const Token &rhs) noexcept
 {
 	copyAndSwap(rhs);
@@ -41,18 +53,8 @@ token::Token &token::Token::operator=(const Token &rhs) noexcept
 
 token::Token &token::Token::operator=(const Token &&rhs) noexcept
 {
-	copyAndSwap(rhs);
+	copyAndSwap(std::move(rhs));
 	return *this;
-}
-
-token::Token::Token(const Token &rhs) noexcept
-{
-	copyAndSwap(rhs);
-}
-
-token::Token::Token(const Token &&rhs) noexcept
-{
-	copyAndSwap(rhs);
 }
 
 token::Token token::Token::createToken(const std::string &value)
@@ -104,12 +106,8 @@ token::Token token::Token::createToken(const std::string &value)
 	return result;
 }
 
-void token::Token::copyAndSwap(const Token &rhs) noexcept
+void token::Token::copyAndSwap(Token rhs) noexcept
 {
-	std::string tempStr{rhs.m_value};
-	TokenType tempType{
-		rhs.m_type.type, rhs.m_type.precedence, rhs.m_type.association};
-
-	m_value.swap(tempStr);
-	token::swap(m_type, tempType);
+	m_value.swap(rhs.m_value);
+	token::swap(m_type, rhs.m_type);
 }
