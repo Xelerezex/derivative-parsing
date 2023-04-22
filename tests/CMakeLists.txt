@@ -8,7 +8,7 @@ set(LIST TESTS)
 # Append files name in list
 list(APPEND TESTS test_token_type)
 list(APPEND TESTS test_token)
-list(APPEND TESTS test_list)
+list(APPEND TESTS test_token_list)
 list(APPEND TESTS test_utils)
 
 foreach(TARGET_NAME IN LISTS TESTS)
