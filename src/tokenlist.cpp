@@ -26,6 +26,9 @@ token::TokenList &token::TokenList::operator=(const TokenList &&rhs) noexcept
 
 token::TokenList::Error token::TokenList::tokenizer(const std::string &inputStr,
 													TokensList &outputTokens)
+
+token::TokenList::Error token::TokenList::tokenize(const std::string &inputStr,
+												   TokensList &outputTokens)
 {
 	Error errorCode{Error::None};
 
