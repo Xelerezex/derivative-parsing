@@ -125,6 +125,16 @@ bool isDivision(const std::string &inputStr);
  */
 bool isExponentiation(const std::string &inputStr);
 
+/**
+ * @brief Функция определяет, считается ли данная на вход строка
+ * 		  символом пробела
+ *
+ * @param inputStr - строка на вход
+ * @return true - считается символом пробела
+ * @return false - не считается символом пробела
+ */
+bool isSpace(const std::string &inputStr);
+
 } // namespace utils
 
 #endif

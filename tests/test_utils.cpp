@@ -589,6 +589,47 @@ TEST(BasicIsExponentiationTest, CharacterIsNotExponentiation)
 	ASSERT_EQ(output, false);
 }
 
+/* -------------------- Тестирование функции isSpace ------------------------ */
+TEST(BasicIsSpaceTest, EmptyString)
+{
+	const std::string input;
+
+	const bool output = utils::isSpace(input);
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsSpaceTest, TooMuchSymbols)
+{
+	bool output = utils::isSpace("   ");
+	ASSERT_EQ(output, false);
+
+	output = utils::isSpace(" x");
+	ASSERT_EQ(output, false);
+}
+
+TEST(BasicIsSpaceTest, CharacterIsSpace)
+{
+	const std::string input{" "};
+
+	const bool output = utils::isSpace(input);
+	ASSERT_EQ(output, true);
+}
+
+TEST(BasicIsSpaceTest, CharacterIsNotSpace)
+{
+	bool output = utils::isSpace("(");
+	ASSERT_EQ(output, false);
+
+	output = utils::isSpace("@");
+	ASSERT_EQ(output, false);
+
+	output = utils::isSpace("*");
+	ASSERT_EQ(output, false);
+
+	output = utils::isSpace("7");
+	ASSERT_EQ(output, false);
+}
+
 /* ----------------------------- RUN ALL TESTS ------------------------------ */
 int main (int argc, char** argv)
 {

@@ -129,3 +129,8 @@ bool utils::isExponentiation(const std::string &inputStr)
 {
 	return isSymbol(inputStr, '^');
 }
+
+bool utils::isSpace(const std::string &inputStr)
+{
+	return isSymbol(inputStr, ' ');
+}
