@@ -1,10 +1,23 @@
 #include "tokenlist.hpp"
 
 #include "utils.hpp"
+#include <sstream>
+
+#ifdef WHEN_DEBUG_MODE
+	#include <thread>
+	#include <iostream>
+#endif
+
 /* -------------------------------------------------------------------------- */
 bool token::operator==(const TokenList &rhs, const TokenList &lhs)
 {
 	return rhs.size() == lhs.size() && rhs.m_tokens == lhs.m_tokens;
+}
+
+/* -------------------------------------------------------------------------- */
+token::TokenList::TokenList(TokensList tokens)
+	: m_tokens{std::move(tokens)}
+{
 }
 
 token::TokenList::TokenList(const TokenList &rhs) noexcept

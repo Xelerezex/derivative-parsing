@@ -43,9 +43,16 @@ public:
 public:
 	/**
 	 * @brief Дефолтный конструктор
-	 *
 	 */
 	TokenList() = default;
+
+	/**
+	 * @brief Конструктор, принимающий на вход вектор с Токенами
+	 *
+	 * @param tokens  - вектор с Токенами, которые копируется, потом копия
+	 * 				    мувается
+	 */
+	TokenList(TokensList tokens);
 
 	/**
 	 * @brief Конструктор копирования
@@ -78,6 +85,9 @@ public:
 	TokenList &operator=(const TokenList &&rhs) noexcept;
 
 	/**
+	 * @brief Деструктор
+	 */
+	~TokenList() = default;
 	 * @brief Метод парсит строку, полученную на вход, и превращает её
 	 *        вектор, со связками Значение-Токен (класс Token).
 	 *

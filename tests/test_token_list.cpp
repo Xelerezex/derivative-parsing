@@ -3,7 +3,44 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-/* -------------------Тестирование Класса TokenList ------------------------- */
+/* ------------------- Тестирование Класса TokenList ------------------------ */
+/* ==== Создание объекта: ==== */
+TEST(TokenListCopyTest, CopyConstructorOperatorTokens)
+{
+	using namespace token;
+
+	const TokenList none;
+	TokenList general{none};
+
+	ASSERT_EQ(general, none);
+
+	const TokenList variable;
+	general = variable;
+
+	ASSERT_EQ(general, variable);
+}
+
+TEST(TokenListMoveTest, CopyConstructorOperatorTokens)
+{
+	using namespace token;
+
+	TokenList none;
+
+	TokenList general = std::move(none);
+
+	ASSERT_EQ(general, (TokenList{}));
+
+	TokenList variable{{
+		Token{"A", {Type::Variable, 2, Association::Right}},
+	}};
+
+	general = std::move(variable);
+
+	ASSERT_EQ(general,
+			  (TokenList{{
+				  Token{"A", {Type::Variable, 2, Association::Right}},
+			  }}));
+}
 /* ==== Сравнение объектов: ==== */
 TEST(TokenListComparasionTests, CompareEqual)
 {
