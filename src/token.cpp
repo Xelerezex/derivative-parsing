@@ -112,6 +112,11 @@ token::Token token::Token::createToken(const std::string &value)
 	return result;
 }
 
+bool token::Token::isNone() const noexcept
+{
+	return m_type.type == Type::None;
+}
+
 void token::Token::copyAndSwap(Token rhs) noexcept
 {
 	m_value.swap(rhs.m_value);

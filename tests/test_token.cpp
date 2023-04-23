@@ -221,6 +221,21 @@ TEST(TokenCreationTest, CreateExponentiation)
 	ASSERT_EQ(unknown, (Token{"x^", {Type::None, 0, Association::None}}));
 }
 
+/* ---------------- Тестирование основных методов класса Token -------------- */
+TEST(TokenGeneralMethods, IsNone)
+{
+	using namespace token;
+
+	const Token exponentiation = Token::createToken("^");
+	ASSERT_FALSE(exponentiation.isNone());
+
+	const Token space = Token::createToken(" ");
+	ASSERT_TRUE(space.isNone());
+
+	const Token defaultToken;
+	ASSERT_TRUE(defaultToken.isNone());
+}
+
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
 int main (int argc, char** argv)
 {

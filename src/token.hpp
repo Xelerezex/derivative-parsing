@@ -80,6 +80,14 @@ public:
 	static Token createToken(const std::string &value);
 
 	/**
+	 * @brief Функция проверяет, считается ли токен, токеном без типа
+	 *
+	 * @return true - тип токена None
+	 * @return false - тип токена имеет отличный от None тип
+	 */
+	bool isNone() const noexcept;
+
+	/**
 	 * @brief Оператор проверки равенства двух токенов
 	 *
 	 * @param rhs - Токен справа от ==
