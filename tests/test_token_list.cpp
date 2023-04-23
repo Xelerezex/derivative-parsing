@@ -121,10 +121,36 @@ TEST(TokenizerTests, EmptyString)
 	TokenList lst;
 	TokensList output;
 
-	const TokenList::Error errorCode = lst.tokenizer("", output);
+	const TokenList::Error errorCode = lst.tokenize("");
 
 	ASSERT_EQ(errorCode, TokenList::Error::EmptyString);
 	ASSERT_EQ(output.size(), 0);
+}
+
+TEST(TokenizerTests, BasicTokenization)
+{
+	using namespace token;
+
+	TokenList list;
+	TokenList expected{{
+		Token{"2", {Type::Number, 0, Association::None}},
+		Token{"*", {Type::Multiplication, 2, Association::Left}},
+		Token{"x", {Type::Variable, 0, Association::None}},
+		Token{"^", {Type::Exponentiation, 3, Association::Right}},
+		Token{"100", {Type::Number, 0, Association::None}},
+		Token{"+", {Type::Plus, 1, Association::Left}},
+		Token{"100", {Type::Number, 0, Association::None}},
+		Token{"*", {Type::Multiplication, 2, Association::Left}},
+		Token{"x", {Type::Variable, 0, Association::None}},
+		Token{"^", {Type::Exponentiation, 3, Association::Right}},
+		Token{"2", {Type::Number, 0, Association::None}},
+	}};
+
+	TokenList::Error errorCode = list.tokenize("  2 * x ^100+ 100*x ^2  ");
+
+	ASSERT_EQ(errorCode, TokenList::Error::None);
+	ASSERT_EQ(list.size(), 11);
+	ASSERT_EQ(list, expected);
 }
 
 /* ------------------------------- RUN ALL TESTS ---------------------------- */

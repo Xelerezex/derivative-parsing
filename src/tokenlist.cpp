@@ -47,9 +47,95 @@ size_t token::TokenList::size() const noexcept
 	return m_tokens.size();
 }
 
-token::TokenList::Error token::TokenList::tokenize(const std::string &inputStr,
-												   TokensList &outputTokens)
+/**
+ * @brief Шаблонная функция, используемая только в этой единице трансляции.
+ *        Нужна для парсинга целого "слова" из стрима
+ *
+ * @tparam Type - шаблонный тип
+ * @param  stream - стрим, из которого будет считываться слово
+ * @param  output - спаршенное строковое значение
+ * @return код ошибки. Error::None - в случае успеха
+ */
+template<typename Type>
+token::TokenList::Error parseUnit (std::istream &stream, std::string &output)
 {
+	using Error = token::TokenList::Error;
+	Error errorCode{Error::None};
+
+	Type word;
+	if (!(stream >> word))
+	{
+		return Error::WordParsingError;
+	}
+
+	// Если тип является строкой, его не надо приводить к строке
+	if constexpr (std::is_same_v<int, Type>)
+	{
+		output = std::to_string(word);
+	}
+	else
+	{
+		output = std::string{word};
+	}
+
+#ifdef WHEN_DEBUG_MODE
+	std::cout << "Unit = " << output << std::endl;
+#endif
+	return errorCode;
+}
+
+/**
+ * @brief Функция, используемая только в этой единице трансляции.
+ *        Нужна для парсинга целого "слова" и создания из него токена
+ *
+ * @tparam Type - шаблонный тип
+ * @param  stream - стрим, из которого будет считываться слово
+ * @param  token - токен, получаемый после парсинга
+ * @return код ошибки. Error::None - в случае успеха
+ */
+token::TokenList::Error parseUnitToToken (std::istream &stream,
+										  token::Token &token)
+{
+	using Error = token::TokenList::Error;
+	Error errorCode{Error::None};
+	std::string unit;
+
+	char character = stream.peek();
+	// Если попаляся пробел, просто выкидываем его
+	if (std::isspace(character))
+	{
+		character = stream.get();
+		return errorCode;
+	}
+
+	bool isDigit = static_cast<bool>(std::isdigit(character));
+	bool isAlpha = static_cast<bool>(std::isalpha(character));
+	bool isSymbol = character == '+' || character == '*' || character == '^';
+	if (isDigit)
+	{
+		errorCode = parseUnit<int>(stream, unit);
+	}
+	else if (isAlpha || isSymbol)
+	{
+		errorCode = parseUnit<char>(stream, unit);
+	}
+	else
+	{
+		errorCode = Error::UnknownToken;
+	}
+
+	// Сохраняем полученный, после парсинга токен только, если нет ошибок
+	if (errorCode == Error::None)
+	{
+		token = token::Token::createToken(unit);
+	}
+
+	return errorCode;
+}
+
+token::TokenList::Error token::TokenList::tokenize(const std::string &inputStr)
+{
+	TokensList temporary;
 	Error errorCode{Error::None};
 
 	if (inputStr.empty())
@@ -57,8 +143,29 @@ token::TokenList::Error token::TokenList::tokenize(const std::string &inputStr,
 		errorCode = Error::EmptyString;
 	}
 
-	// Вывод результа парсинга из функции
-	outputTokens = m_tokens;
+	std::stringstream stream{inputStr};
+
+	while (stream.peek() != std::char_traits<char>::eof())
+	{
+		Token token;
+		errorCode = parseUnitToToken(stream, token);
+		if (errorCode != Error::None)
+		{
+			break;
+		}
+
+		// Не записываем token, если он с дефолтными значениями
+		if (!token.isNone())
+		{
+			temporary.push_back(token);
+		}
+	}
+
+	// Сохранение резултата при отсутствии ошибок
+	if (errorCode == Error::None)
+	{
+		m_tokens = std::move(temporary);
+	}
 
 	return errorCode;
 }

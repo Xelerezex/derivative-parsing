@@ -102,10 +102,9 @@ public:
 	 *        вектор, со связками Значение-Токен (класс Token).
 	 *
 	 * @param inputStr строка, идущая на вход
-	 * @param outputTokens вектор с токенами, который получится после парсинга
 	 * @return код ошибки. Error::None - если функция отработала успешно
 	 */
-	Error tokenize(const std::string &inputStr, TokensList &outputTokens);
+	Error tokenize(const std::string &inputStr);
 
 	/**
 	 * @brief Оператор проверки равенства двух листов с токенами
