@@ -46,7 +46,7 @@ token::Token::Token(const Token &rhs) noexcept
 {
 }
 
-token::Token::Token(const Token &&rhs) noexcept
+token::Token::Token(Token &&rhs) noexcept
 	: m_value{std::move(rhs.m_value)}
 	, m_type{std::move(rhs.m_type)}
 {
@@ -58,7 +58,7 @@ token::Token &token::Token::operator=(const Token &rhs) noexcept
 	return *this;
 }
 
-token::Token &token::Token::operator=(const Token &&rhs) noexcept
+token::Token const &token::Token::operator=(Token &&rhs) noexcept
 {
 	copyAndSwap(std::move(rhs));
 	return *this;

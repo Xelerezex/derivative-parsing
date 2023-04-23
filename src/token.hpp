@@ -47,7 +47,7 @@ public:
 	 *
 	 * @param rhs  - rvalue токен
 	 */
-	Token(const Token &&rhs) noexcept;
+	Token(Token &&rhs) noexcept;
 
 	/**
 	 * @brief Оператор присваивания копии.
@@ -63,7 +63,7 @@ public:
 	 * @param rhs - rvalue токен
 	 * @return Token& - ссылка на этот объект
 	 */
-	Token &operator=(const Token &&rhs) noexcept;
+	Token const &operator=(Token &&rhs) noexcept;
 
 	/**
 	 * @brief Деструктор
@@ -85,7 +85,7 @@ public:
 	 * @return true - тип токена None
 	 * @return false - тип токена имеет отличный от None тип
 	 */
-	bool isNone() const noexcept;
+	[[nodiscard]] bool isNone() const noexcept;
 
 	/**
 	 * @brief Оператор проверки равенства двух токенов

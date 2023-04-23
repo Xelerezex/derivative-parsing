@@ -52,7 +52,7 @@ public:
 	 * @param tokens  - вектор с Токенами, которые копируется, потом копия
 	 * 				    мувается
 	 */
-	TokenList(TokensList tokens);
+	explicit TokenList(TokensList tokens);
 
 	/**
 	 * @brief Конструктор копирования
@@ -66,7 +66,7 @@ public:
 	 *
 	 * @param rhs  - rvalue значение списока с токенами
 	 */
-	TokenList(const TokenList &&rhs) noexcept;
+	TokenList(TokenList &&rhs) noexcept;
 
 	/**
 	 * @brief Оператор присваивания копии
@@ -82,7 +82,7 @@ public:
 	 * @param rhs - rvalue значение списока с токенами
 	 * @return TokenList& - ссылка на этот объект
 	 */
-	TokenList &operator=(const TokenList &&rhs) noexcept;
+	TokenList const &operator=(TokenList &&rhs) noexcept;
 
 	/**
 	 * @brief Деструктор
@@ -95,7 +95,7 @@ public:
 	 *
 	 * @return количество токенов в контейнере
 	 */
-	size_t size() const noexcept;
+	[[nodiscard]] size_t size() const noexcept;
 
 	/**
 	 * @brief Метод парсит строку, полученную на вход, и превращает её

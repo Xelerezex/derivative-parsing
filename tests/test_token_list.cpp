@@ -46,12 +46,12 @@ TEST(TokenListComparasionTests, CompareEqual)
 {
 	using namespace token;
 
-	TokenList list{{
+	const TokenList list{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
 	}};
-	TokenList copy{{
+	const TokenList copy{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
@@ -64,12 +64,12 @@ TEST(TokenListComparasionTests, CompareNotEqualSize)
 {
 	using namespace token;
 
-	TokenList list{{
+	const TokenList list{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
 	}};
-	TokenList copy{{
+	const TokenList copy{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"x", {Type::Variable, 0, Association::None}},
 	}};
@@ -81,12 +81,12 @@ TEST(TokenListComparasionTests, CompareNotEqualValue)
 {
 	using namespace token;
 
-	TokenList list{{
+	const TokenList list{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
 	}};
-	TokenList copy{{
+	const TokenList copy{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"y", {Type::Variable, 0, Association::None}},
@@ -100,7 +100,7 @@ TEST(TokenListTests, WhatSize)
 {
 	using namespace token;
 
-	TokenList list{{
+	const TokenList list{{
 		Token{"1000", {Type::Number, 0, Association::None}},
 		Token{"+", {Type::Plus, 1, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
@@ -119,7 +119,7 @@ TEST(TokenizerTests, EmptyString)
 	using namespace token;
 
 	TokenList lst;
-	TokensList output;
+	const TokensList output;
 
 	const TokenList::Error errorCode = lst.tokenize("");
 
@@ -132,7 +132,7 @@ TEST(TokenizerTests, BasicTokenization)
 	using namespace token;
 
 	TokenList list;
-	TokenList expected{{
+	const TokenList expected{{
 		Token{"2", {Type::Number, 0, Association::None}},
 		Token{"*", {Type::Multiplication, 2, Association::Left}},
 		Token{"x", {Type::Variable, 0, Association::None}},
@@ -146,7 +146,8 @@ TEST(TokenizerTests, BasicTokenization)
 		Token{"2", {Type::Number, 0, Association::None}},
 	}};
 
-	TokenList::Error errorCode = list.tokenize("  2 * x ^100+ 100*x ^2  ");
+	const TokenList::Error errorCode =
+		list.tokenize("  2 * x ^100+ 100*x ^2  ");
 
 	ASSERT_EQ(errorCode, TokenList::Error::None);
 	ASSERT_EQ(list.size(), 11);

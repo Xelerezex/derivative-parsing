@@ -25,7 +25,7 @@ token::TokenList::TokenList(const TokenList &rhs) noexcept
 {
 }
 
-token::TokenList::TokenList(const TokenList &&rhs) noexcept
+token::TokenList::TokenList(TokenList &&rhs) noexcept
 	: m_tokens{std::move(rhs.m_tokens)}
 {
 }
@@ -36,7 +36,7 @@ token::TokenList &token::TokenList::operator=(const TokenList &rhs) noexcept
 	return *this;
 }
 
-token::TokenList &token::TokenList::operator=(const TokenList &&rhs) noexcept
+token::TokenList const &token::TokenList::operator=(TokenList &&rhs) noexcept
 {
 	copyAndSwap(std::move(rhs));
 	return *this;
@@ -60,7 +60,6 @@ template<typename Type>
 token::TokenList::Error parseUnit (std::istream &stream, std::string &output)
 {
 	using Error = token::TokenList::Error;
-	Error errorCode{Error::None};
 
 	Type word;
 	if (!(stream >> word))
@@ -81,7 +80,8 @@ token::TokenList::Error parseUnit (std::istream &stream, std::string &output)
 #ifdef WHEN_DEBUG_MODE
 	std::cout << "Unit = " << output << std::endl;
 #endif
-	return errorCode;
+
+	return Error::None;
 }
 
 /**
@@ -100,17 +100,20 @@ token::TokenList::Error parseUnitToToken (std::istream &stream,
 	Error errorCode{Error::None};
 	std::string unit;
 
-	char character = stream.peek();
+	const char character = static_cast<char>(stream.peek());
+
 	// Если попаляся пробел, просто выкидываем его
-	if (std::isspace(character))
+	const bool isSpace = static_cast<bool>(std::isspace(character));
+	if (isSpace)
 	{
-		character = stream.get();
+		stream.get();
 		return errorCode;
 	}
 
-	bool isDigit = static_cast<bool>(std::isdigit(character));
-	bool isAlpha = static_cast<bool>(std::isalpha(character));
-	bool isSymbol = character == '+' || character == '*' || character == '^';
+	const bool isDigit = static_cast<bool>(std::isdigit(character));
+	const bool isAlpha = static_cast<bool>(std::isalpha(character));
+	const bool isSymbol =
+		character == '+' || character == '*' || character == '^';
 	if (isDigit)
 	{
 		errorCode = parseUnit<int>(stream, unit);
