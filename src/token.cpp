@@ -27,6 +27,7 @@ void token::swap(Token &lhs, Token &rhs)
 	token::swap(lhs.m_type, rhs.m_type);
 }
 
+/* -------------------------------------------------------------------------- */
 token::Token::Token()
 	: m_value{"Empty"}
 	, m_type{Type::None, 0, Association::None}

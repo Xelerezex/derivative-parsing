@@ -1,6 +1,11 @@
 #include "tokenlist.hpp"
 
 #include "utils.hpp"
+/* -------------------------------------------------------------------------- */
+bool token::operator==(const TokenList &rhs, const TokenList &lhs)
+{
+	return rhs.size() == lhs.size() && rhs.m_tokens == lhs.m_tokens;
+}
 
 token::TokenList::TokenList(const TokenList &rhs) noexcept
 	: m_tokens{rhs.m_tokens}

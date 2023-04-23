@@ -88,9 +88,14 @@ public:
 	Error tokenize(const std::string &inputStr, TokensList &outputTokens);
 
 	/**
-	 * @brief Деструктор
+	 * @brief Оператор проверки равенства двух листов с токенами
+	 *
+	 * @param rhs - лист с токенами справа от ==
+	 * @param lhs - лист с токенами слева от ==
+	 * @return true - листы с токенами равны
+	 * @return false - листы с токенами не равны
 	 */
-	~TokenList() = default;
+	friend bool operator==(const TokenList &rhs, const TokenList &lhs);
 
 private:
 	/**
