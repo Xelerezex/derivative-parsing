@@ -112,8 +112,9 @@ token::TokenList::Error parseUnitToToken (std::istream &stream,
 
 	const bool isDigit = static_cast<bool>(std::isdigit(character));
 	const bool isAlpha = static_cast<bool>(std::isalpha(character));
-	const bool isSymbol =
-		character == '+' || character == '*' || character == '^';
+	const bool isSymbol = character == '+' || character == '*'
+						  || character == '^' || character == '('
+						  || character == ')' || character == '/';
 	if (isDigit)
 	{
 		errorCode = parseUnit<int>(stream, unit);
