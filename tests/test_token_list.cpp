@@ -214,6 +214,72 @@ TEST(TokenizerTests, TokenizationSentenceTwo)
 	ASSERT_EQ(list, expected);
 }
 
+TEST(TokenizerTests, TokenizationMinusSentences)
+{
+	using namespace token;
+
+	TokenList list;
+	const TokenList number{{
+		Token{"-42", {Type::Number, 0, Association::None}},
+	}};
+
+	TokenList::Error errorCode = list.tokenize("-42");
+
+	ASSERT_EQ(errorCode, TokenList::Error::None);
+	ASSERT_EQ(list.size(), 1);
+	ASSERT_EQ(list, number);
+
+	const TokenList sentence{{
+		Token{"x", {Type::Variable, 0, Association::None}},
+		Token{"-", {Type::Minus, 1, Association::Left}},
+		Token{"42", {Type::Number, 0, Association::None}},
+	}};
+
+	errorCode = list.tokenize("x - 42");
+
+	ASSERT_EQ(errorCode, TokenList::Error::None);
+	ASSERT_EQ(list.size(), 3);
+	ASSERT_EQ(list, sentence);
+}
+
+TEST(TokenizerTests, TokenizationSentenceAll)
+{
+	using namespace token;
+
+	TokenList list;
+	const TokenList expected{{
+		Token{"100", {Type::Number, 0, Association::None}},
+		Token{"/", {Type::Division, 2, Association::Left}},
+		Token{"(", {Type::LeftParenthesis, 0, Association::None}},
+		Token{"x", {Type::Variable, 0, Association::None}},
+		Token{"-", {Type::Minus, 1, Association::Left}},
+		Token{"5", {Type::Number, 0, Association::None}},
+		Token{")", {Type::RightParenthesis, 0, Association::None}},
+		Token{"+", {Type::Plus, 1, Association::Left}},
+		Token{"-28", {Type::Number, 0, Association::None}},
+		Token{"*", {Type::Multiplication, 2, Association::Left}},
+		Token{"x", {Type::Variable, 0, Association::None}},
+		Token{"^", {Type::Exponentiation, 3, Association::Right}},
+		Token{"(", {Type::LeftParenthesis, 0, Association::None}},
+		Token{"z", {Type::Variable, 0, Association::None}},
+		Token{"+", {Type::Plus, 1, Association::Left}},
+		Token{"5", {Type::Number, 0, Association::None}},
+		Token{")", {Type::RightParenthesis, 0, Association::None}},
+	}};
+
+	/* FIXME: В будущем могут возникнуть проблемы. Сейчас минус парсится так:
+	   - 5 - спарсится как два разных токена. А вот -5 как один токен. Различие
+	   между отрицательным числом и знаком минуса пока лишь в пробеле между
+	   минусом и чслом.
+	*/
+	const TokenList::Error errorCode =
+		list.tokenize("100 / (x - 5) + -28 * x^(z + 5)");
+
+	ASSERT_EQ(errorCode, TokenList::Error::None);
+	ASSERT_EQ(list.size(), 17);
+	ASSERT_EQ(list, expected);
+}
+
 /* ------------------------------- RUN ALL TESTS ---------------------------- */
 int main (int argc, char** argv)
 {

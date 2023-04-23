@@ -85,6 +85,25 @@ token::TokenList::Error parseUnit (std::istream &stream, std::string &output)
 }
 
 /**
+ * @brief Шаблонная функция, используемая только в этой единице трансляции.
+ *        Нужна для возврата, последнего спаршенного слова обратно в стрим
+ *
+ * @param  stream - стрим, из которого слово было спаршено, и куда вернется
+ * @return код ошибки. Error::None - в случае успеха
+ */
+token::TokenList::Error returnCharToStream (std::istream &stream)
+{
+	using Error = token::TokenList::Error;
+
+	if (!(stream.unget()))
+	{
+		return Error::ParsingUngetError;
+	}
+
+	return Error::None;
+}
+
+/**
  * @brief Функция, используемая только в этой единице трансляции.
  *        Нужна для парсинга целого "слова" и создания из него токена
  *
@@ -100,9 +119,9 @@ token::TokenList::Error parseUnitToToken (std::istream &stream,
 	Error errorCode{Error::None};
 	std::string unit;
 
-	const char character = static_cast<char>(stream.peek());
+	char character = static_cast<char>(stream.peek());
 
-	// Если попаляся пробел, просто выкидываем его
+	// Если попался пробел, просто выкидываем его
 	const bool isSpace = static_cast<bool>(std::isspace(character));
 	if (isSpace)
 	{
@@ -115,6 +134,7 @@ token::TokenList::Error parseUnitToToken (std::istream &stream,
 	const bool isSymbol = character == '+' || character == '*'
 						  || character == '^' || character == '('
 						  || character == ')' || character == '/';
+	const bool isMinus = character == '-';
 	if (isDigit)
 	{
 		errorCode = parseUnit<int>(stream, unit);
@@ -122,6 +142,20 @@ token::TokenList::Error parseUnitToToken (std::istream &stream,
 	else if (isAlpha || isSymbol)
 	{
 		errorCode = parseUnit<char>(stream, unit);
+	}
+	else if (isMinus)
+	{
+		character = stream.get();
+		if (static_cast<bool>(std::isdigit(stream.peek())))
+		{
+			errorCode = returnCharToStream(stream);
+			errorCode = parseUnit<int>(stream, unit);
+		}
+		else
+		{
+			errorCode = returnCharToStream(stream);
+			errorCode = parseUnit<char>(stream, unit);
+		}
 	}
 	else
 	{

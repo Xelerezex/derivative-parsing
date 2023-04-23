@@ -82,4 +82,24 @@
     "editor.formatOnSave": true,
     //"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 3, IncludeBlocks: Merge, IndentGotoLabels: true, KeepEmptyLinesAtTheStartOfBlocks: true}"
     "C_Cpp.clang_format_style": "file:${workspaceFolder}/.vscode/.clang-format",
+
+        "todo-tree.highlights.defaultHighlight": {
+        "icon": "alert",
+        "type": "text",
+        "foreground": "#FF4500",
+        "background": "#FFFFFF",
+        "opacity": 50,
+        "iconColour": "#8A2BE2"
+    },
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "type": "line"
+        },
+        "FIXME": {
+            "foreground": "#000000",
+            "iconColour": "#ADFF2F",
+            "gutterIcon": true
+        }
+    }
 }
