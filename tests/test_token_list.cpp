@@ -94,6 +94,26 @@ TEST(TokenListComparasionTests, CompareNotEqualValue)
 
 	ASSERT_NE(list, copy);
 }
+
+/* ==== Основные методы: ==== */
+TEST(TokenListTests, WhatSize)
+{
+	using namespace token;
+
+	TokenList list{{
+		Token{"1000", {Type::Number, 0, Association::None}},
+		Token{"+", {Type::Plus, 1, Association::Left}},
+		Token{"x", {Type::Variable, 0, Association::None}},
+	}};
+
+	ASSERT_EQ(list.size(), 3);
+
+	const TokenList defaultTokenList;
+
+	ASSERT_EQ(defaultTokenList.size(), 0);
+}
+
+/* ==== Токенизация: ==== */
 TEST(TokenizerTests, EmptyString)
 {
 	using namespace token;
